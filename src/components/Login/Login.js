@@ -9,13 +9,13 @@ function Login() {
         <>
           <label className="auth__form-label">
             <span className="auth__form-input-name">Email</span>
-            <input className="auth__form-input" id="emailReg" type="email" name="emailRegInput"
+            <input className="auth__form-input" id="emailLog" type="email" name="emailLogInput"
               placeholder="Email" required />
             <span className="auth__form-input-error"></span>
           </label>
           <label className="auth__form-label">
             <span className="auth__form-input-name">Пароль</span>
-            <input className="auth__form-input" id="passwordReg" type="password" name="passwordRegInput"
+            <input className="auth__form-input" id="passwordLog" type="password" name="passwordLogInput"
               placeholder="Пароль" required autoComplete="off" />
             <span className="auth__form-input-error"></span>
           </label>

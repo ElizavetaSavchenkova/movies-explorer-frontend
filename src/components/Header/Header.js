@@ -3,9 +3,13 @@ import './Header.css';
 import { Link } from 'react-router-dom'
 import Navigation from '../Navigation/Navigation'
 import headerLogo from '../../images/headerLogo.svg';
+import BurgerMenu from '../BurgerMenu/BurgerMenu'
 //import { Switch, Route, Link } from 'react-router-dom'//
 
-function Header({ loggedIn }) {
+
+
+function Header({ loggedIn, onMenuClick }) {
+
   return (
     <header className={`header ${loggedIn ? "header_theme_light" : ""}`}>
       <div className="header__container">
@@ -18,12 +22,13 @@ function Header({ loggedIn }) {
             <Link to='/signin' className="header__login">Войти</Link>
           </div>
         }
+        {loggedIn &&
+          <>
+            <Navigation />
+            <BurgerMenu onMenuClick={onMenuClick} />
+          </>
+        }
       </div>
-      {loggedIn &&
-        <>
-          <Navigation />
-        </>
-      }
     </header >
   )
 }
