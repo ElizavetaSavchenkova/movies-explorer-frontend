@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
 import Main from '../Main/Main'
@@ -8,14 +8,14 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import Profile from '../Profile/Profile';
-import Navigation from '../Navigation/Navigation';
 import PopupMenu from '../PopupMenu/PopupMenu';
-
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
 import './App.css';
 
-
 function App() {
-
+  const location = useLocation();
+  const footer = ['/', '/movies', '/saved-movies'];
   const [loggedIn, setLoggedIn] = useState(true);
   const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
 
@@ -27,52 +27,43 @@ function App() {
     setIsPopupMenuOpen(false);
   }
 
+  function handleLogin () {
+    setLoggedIn(true);
+  }
+
   return (
     <div className="page">
-
       <Switch>
-
         <Route exact path="/">
           <Header />
           <Main />
-          <Footer />
         </Route>
-
         <Route path="/signup">
           <Register />
         </Route>
-
         <Route path="/signin">
           <Login />
         </Route>
-
-        <Route exact path="/profile">
-          <Header loggedIn={loggedIn} onMenuClick={handleMenuClick} />
-          <PopupMenu isOpen={isPopupMenuOpen} onMenuClick={handleCloseMenu}/>
-
+        <Route path="/profile">
+          <Header loggedIn={handleLogin} onMenuClick={handleMenuClick} />
+          <PopupMenu isOpen={isPopupMenuOpen} onMenuClick={handleCloseMenu} />
           <Profile />
-
         </Route>
-
-        <Route path='/Nav'>
-          <Navigation />
+        <Route path="/movies">
+          <Header loggedIn={handleLogin}  onMenuClick={handleMenuClick} />
+          <Movies />
         </Route>
-
+        <Route path="/saved-movies">
+          <Header loggedIn={handleLogin} onMenuClick={handleMenuClick} />
+          <SavedMovies />
+        </Route>
         <Route path="*">
           <NotFound />
         </Route>
-
-
-
-
       </Switch>
-
-
-
+      {footer.includes(location.pathname) ? <Footer /> : null}
     </div >
   );
 }
 
 export default App;
-
-//lang

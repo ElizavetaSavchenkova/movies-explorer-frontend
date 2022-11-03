@@ -1,5 +1,5 @@
-import burgerIcon from '../../images/burger-icon.svg'
 import './BurgerMenu.css';
+import burgerIcon from '../../images/burger-icon.svg'
 
 function BurgerMenu({ onMenuClick }) {
   return (

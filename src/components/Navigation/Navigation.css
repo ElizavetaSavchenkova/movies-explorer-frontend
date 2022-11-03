@@ -76,8 +76,8 @@
   color: #000000;
 }
 
-@media screen and (max-width: 800px){
-  .navigation{
+@media screen and (max-width: 800px) {
+  .navigation {
     display: none;
   }
 }

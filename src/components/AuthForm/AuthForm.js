@@ -1,7 +1,7 @@
-import React from "react";
-import headerLogo from '../../images/headerLogo.svg';
 import { useLocation } from 'react-router-dom';
+
 import './AuthForm.css';
+import headerLogo from '../../images/headerLogo.svg';
 
 function AuthForm({ head, children, text, path, link }) {
   const location = useLocation();
@@ -15,7 +15,8 @@ function AuthForm({ head, children, text, path, link }) {
           <img className="auth__form-logo-pic" alt="Логотип" src={headerLogo} />
         </a>
         <h2 className="auth__form-title">{head}</h2>
-        <fieldset className="auth__form-fieldset">{children}
+        <fieldset className="auth__form-fieldset">
+          {children}
           <button className={`auth__button ${!url ? "auth__button_register" : ""}`}>{buttonText}</button>
         </fieldset>
         <p className="auth__form-text">{text}
