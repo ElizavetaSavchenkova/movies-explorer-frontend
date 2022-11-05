@@ -16,7 +16,6 @@ import './App.css';
 function App() {
   const location = useLocation();
   const footer = ['/', '/movies', '/saved-movies'];
-
   const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
 
   function handleMenuClick() {
@@ -65,3 +64,4 @@ function App() {
 }
 
 export default App;
+//loggedIn на фронт временно через "true"
