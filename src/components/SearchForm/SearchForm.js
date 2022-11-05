@@ -1,3 +1,4 @@
+import React from 'react';
 import './SearchForm.css';
 import searchIcon from '../../images/search-icon.svg';
 
@@ -13,7 +14,7 @@ function SearchForm() {
         <img className="search-form__icon-magnifier" src={searchIcon} alt="Иконка-'лупа'" />
         <div className="search-form__input-container">
           <input className="search-form__input" id="searchFilm" type="text" name="searchFilm" placeholder="Фильм" required />
-          <button className="search-form__button" aria-label="Найти фильм" type="submit"></button>
+          <button aria-label="Найти фильм" className="search-form__button" type="submit"></button>
         </div>
       </div>
       <div className="search-form__shortfilms">

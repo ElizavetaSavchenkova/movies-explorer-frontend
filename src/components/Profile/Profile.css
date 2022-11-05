@@ -15,6 +15,8 @@
   font-weight: 500;
   font-size: 24px;
   line-height: 29px;
+  color: #000000;
+  box-sizing: border-box;
 }
 
 .profile__user-form {
@@ -115,11 +117,11 @@
 @media screen and (max-width: 1023px) and (min-width:550px) {
 
   .profile {
-    padding: 236px 0 269px 0;
+    padding: 234.5px 0 269px 0;
   }
 
   .profile__title {
-    padding: 0 0 96px 0;
+    padding: 0 0 94px 0;
   }
 
   .profile__buttons {
@@ -133,15 +135,15 @@
   }
 
   .profile__user-form {
-    max-width: 81.25%;
+    max-width: 260px;
   }
 
   .profile__title {
-    padding: 0 0 80px 0;
+    padding: 0 0 78.2px 0;
   }
 
   .profile__buttons {
-    margin: 379px 0 0 0;
+    margin: 380px 0 0 0;
   }
 
   .profile__button {

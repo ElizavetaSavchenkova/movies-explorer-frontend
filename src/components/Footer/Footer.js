@@ -1,12 +1,10 @@
-import React from "react";
 import './Footer.css';
-//import { Switch, Route, Link } from 'react-router-dom';
 
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer__container">
-        <h3 class="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h3>
+        <h3 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h3>
         <div className="footer__info">
           <p className="footer__info-data">&copy; 2022</p>
           <div className="footer__info-links">

@@ -1,6 +1,6 @@
+import React from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-
 import Main from '../Main/Main'
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -16,7 +16,7 @@ import './App.css';
 function App() {
   const location = useLocation();
   const footer = ['/', '/movies', '/saved-movies'];
-  const [loggedIn, setLoggedIn] = useState(true);
+
   const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
 
   function handleMenuClick() {
@@ -25,10 +25,6 @@ function App() {
 
   function handleCloseMenu() {
     setIsPopupMenuOpen(false);
-  }
-
-  function handleLogin () {
-    setLoggedIn(true);
   }
 
   return (
@@ -45,16 +41,18 @@ function App() {
           <Login />
         </Route>
         <Route path="/profile">
-          <Header loggedIn={handleLogin} onMenuClick={handleMenuClick} />
+          <Header loggedIn="true" onMenuClick={handleMenuClick} />
           <PopupMenu isOpen={isPopupMenuOpen} onMenuClick={handleCloseMenu} />
           <Profile />
         </Route>
         <Route path="/movies">
-          <Header loggedIn={handleLogin}  onMenuClick={handleMenuClick} />
+          <Header loggedIn="true" onMenuClick={handleMenuClick} />
+          <PopupMenu isOpen={isPopupMenuOpen} onMenuClick={handleCloseMenu} />
           <Movies />
         </Route>
         <Route path="/saved-movies">
-          <Header loggedIn={handleLogin} onMenuClick={handleMenuClick} />
+          <Header loggedIn="true" onMenuClick={handleMenuClick} />
+          <PopupMenu isOpen={isPopupMenuOpen} onMenuClick={handleCloseMenu} />
           <SavedMovies />
         </Route>
         <Route path="*">

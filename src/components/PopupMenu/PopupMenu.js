@@ -1,6 +1,7 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import './PopupMenu.css';
-import profileIcon from '../../images/profile-image.svg'
+import profileIcon from '../../images/profile-icon.svg';
 
 function PopupMenu({ isOpen, onMenuClick }) {
   return (

@@ -108,7 +108,7 @@
   }
 
   .techs__information {
-    padding: 80px 0 0 0;
+    padding: 81px 0 0 0;
   }
 
   .techs__information-title {
@@ -140,6 +140,10 @@
     padding: 50px 0 0 0;
     width: 178px;
     flex-wrap: wrap;
+  }
+
+  .techs__information {
+    padding: 60px 0 0 0;
   }
 
   .techs__technologies-item {

@@ -9,7 +9,7 @@
 
 .movies__card-description {
   margin: 0;
-  padding: 14px 14px;
+  padding: 15px 14px 14px;;
   max-width: 364px;
   display: flex;
   justify-content: space-between;
@@ -80,7 +80,7 @@
   background-image: url(../../images/saveicon-delete.svg);
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #313131;
+  margin: 5px 0 0 0;
 }
 
 .movies__card-button:hover {

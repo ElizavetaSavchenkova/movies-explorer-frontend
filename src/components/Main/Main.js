@@ -1,3 +1,4 @@
+import React from 'react';
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
@@ -8,14 +9,13 @@ import './Main.css'
 function Main() {
   return (
     <main className="main">
-      <Promo/>
-      <AboutProject/>
-      <Techs/>
-      <AboutMe/>
-      <Portfolio/>
+      <Promo />
+      <AboutProject />
+      <Techs />
+      <AboutMe />
+      <Portfolio />
     </main>
   )
-
 }
 
 export default Main

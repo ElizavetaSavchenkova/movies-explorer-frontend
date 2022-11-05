@@ -1,9 +1,9 @@
+import React from 'react';
 import { Link } from 'react-router-dom'
 import Navigation from '../Navigation/Navigation'
-import headerLogo from '../../images/headerLogo.svg';
+import headerLogo from '../../images/logo-header.svg';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import './Header.css';
-
 
 function Header({ loggedIn, onMenuClick }) {
   return (

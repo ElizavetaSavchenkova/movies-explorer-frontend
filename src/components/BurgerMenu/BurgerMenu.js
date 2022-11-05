@@ -1,3 +1,4 @@
+import React from 'react';
 import './BurgerMenu.css';
 import burgerIcon from '../../images/burger-icon.svg'
 

@@ -78,7 +78,7 @@
 
 @media screen and (min-width:646px) and (max-width:1023px) {
   .promo__container {
-    padding: 140px 44px 76px;
+    padding: 140px 44px 74px;
     flex-direction: column-reverse;
     gap: 48px;
     align-items: center;
@@ -136,7 +136,7 @@
     padding: 70px 10px 30px 10px;
     flex-direction: column-reverse;
     align-items: center;
-    gap: 44px;
+    gap: 42px;
   }
 
   .promo__information {
@@ -153,7 +153,7 @@
 
   .promo__information-description {
     max-width: 81.25%;
-    padding: 24px 0 80px 0;
+    padding: 22px 0 80px 0;
     text-align: center;
   }
 

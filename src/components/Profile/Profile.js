@@ -1,3 +1,4 @@
+import React from 'react';
 import './Profile.css';
 
 function Profile() {
@@ -8,7 +9,7 @@ function Profile() {
         <fieldset className="profile__field">
           <label className="profile__data">
             <span className="profile__data-name">Имя</span>
-            <input className="profile__data-input" id="nameProfile" type="email" name="nameProfileInput"
+            <input className="profile__data-input" id="nameProfile" type="text" name="nameProfileInput"
               placeholder="Имя" required />
           </label>
           <label className="profile__data">

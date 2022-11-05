@@ -1,4 +1,4 @@
-
+import React from "react";
 import { Route, useLocation } from "react-router-dom";
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
@@ -50,8 +50,8 @@ function MoviesCardList() {
 
 export default MoviesCardList;
 
-/* кнопка "Еще" скрыта для примера, как на макете*/
-
+//кнопка "Еще" скрыта для примера, как на макете//
+// временно стоит по 12 и 3 карточки. потом вставлять через массив"
 
 
 

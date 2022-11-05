@@ -95,6 +95,14 @@
   border-bottom: 1px solid #E8E8E8;
 }
 
+.auth__form-input_password{
+  color: #EE3465
+}
+
+.auth__form-input_email{
+  border-bottom: 1px solid #2BE080;
+}
+
 .auth__form-input::placeholder {
   color: #A0A0A0;
 }
@@ -179,8 +187,12 @@
   }
 
   .auth__form {
-    width: 81.25%;
+    max-width: 260px;
     align-items: center;
+  }
+
+  .auth__form-fieldset {
+    width: 260px;
   }
 
   .auth__form-title {
@@ -193,17 +205,20 @@
   }
 
   .auth__button {
-    margin: 285px 0 0 0;
+    margin: 286px 0 0 0;
+    font-size: 12px;
+    line-height: 15px;
   }
 
   .auth__form-input-error {
     width: 100%;
     align-self: flex-start;
-
   }
 
   .auth__button_register {
-    margin: 198px 0 0 0;
+    margin: 218px 0 0 0;
+    font-size: 12px;
+    line-height: 15px;
   }
 
   .auth__form-text {

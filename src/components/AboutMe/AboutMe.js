@@ -1,5 +1,6 @@
+import React from 'react';
 import './AboutMe.css';
-import studentPic from '../../images/photo.jpg'
+import studentPic from '../../images/photo.jpg';
 
 function AboutMe() {
   return (

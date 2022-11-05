@@ -16,6 +16,7 @@
     visibility: hidden;
     background-color: rgba(0, 0, 0, .3);
     visibility: hidden;
+    z-index: 1;
   }
 
 
@@ -136,13 +137,11 @@
     line-height: 16px;
     color: #000000;
   }
-
 }
 
 @media screen and (min-width: 320px) and (max-width:550px) {
   .popup-menu__container {
     width: 100%;
-    gap: 435px;
   }
 
   .popup-menu__list {
@@ -150,7 +149,7 @@
   }
 
   .popup-menu__profile {
-    padding: 0 0 46px 0;
+    padding: 0 0 49px 0;
   }
 
   .popup-menu__list-container {
@@ -161,45 +160,9 @@
     padding: 0 0 7px 0;
   }
 
+  .popup-menu__close-button {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+  }
 }
-
-/*.popup-nav__link_active {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 8px;
-  }
-
-  .popup-nav__account {
-  align-self: center;
-  margin-bottom: 99px;
-  padding-right: 43px;
-  position: relative;
-  }
-
-
-  .popup-nav__account::after {
-  position: absolute;
-  display: block;
-  content: url(../../images/profile-image.svg);
-  bottom: -7px;
-  right: 0;
-  width: 26px;
-  height: 30px;
-  background: #F9F9F9;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  }
-
-  .popup-nav__account-link {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
-  text-decoration: none;
-  color: #000000;
-  }
-
-  }
-
-*/
