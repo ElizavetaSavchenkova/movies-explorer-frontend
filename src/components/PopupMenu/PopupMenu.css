@@ -19,7 +19,6 @@
     z-index: 1;
   }
 
-
   .popup-menu_is-opened {
     display: flex;
     opacity: 1;

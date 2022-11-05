@@ -9,7 +9,8 @@
 
 .movies__card-description {
   margin: 0;
-  padding: 15px 14px 14px;;
+  padding: 15px 14px 14px;
+  ;
   max-width: 364px;
   display: flex;
   justify-content: space-between;
@@ -57,8 +58,8 @@
   height: 30px;
   border: none;
   border-radius: 36px;
-  opacity:1;
-  transition: .5s opacity ;
+  opacity: 1;
+  transition: .5s opacity;
   cursor: pointer;
 }
 
