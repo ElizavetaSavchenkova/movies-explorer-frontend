@@ -1,0 +1,30 @@
+.burger-menu {
+  margin: 0;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  display: none;
+  transition: opacity 1s ease-in;
+  position: relative;
+  top: -3px;
+}
+
+.burger-menu:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 800px) and (min-width: 550px) {
+  .burger-menu {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 550px) and (min-width: 320px) {
+  .burger-menu {
+    display: block;
+    width: 36px;
+    height: 39px;
+    right: 2px;
+    top: -0.5px;
+  }
+}
