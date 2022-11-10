@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Route, useLocation } from "react-router-dom";
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
@@ -15,26 +16,22 @@ import film10 from '../../images/film10.svg';
 import film11 from '../../images/film11.svg';
 import film12 from '../../images/film12.svg';
 
-function MoviesCardList() {
+function MoviesCardList({movie}) {
   const location = useLocation();
   const url = location.pathname === "/saved-movies";
+
+  const [movies, setMovies] = useState([]);
 
   return (
     <section className="movies">
       <div className="movies__cardlist">
         <Route path="/movies">
-          <MoviesCard picture={film1} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film2} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film3} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film4} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film5} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film6} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film7} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film8} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film9} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film10} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film11} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
-          <MoviesCard picture={film12} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />
+        {movies.map((movie) =>
+          <MoviesCard
+            key={movie.id || movie._id}
+            movie={movie}
+          />
+        )}
         </Route>
         <Route path="/saved-movies">
           <MoviesCard picture={film1} cardtitle={'33 слова о дизайне'} duration={'1ч 47м'} />

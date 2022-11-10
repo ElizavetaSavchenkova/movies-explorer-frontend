@@ -2,14 +2,19 @@ import { useLocation, Link } from 'react-router-dom';
 import './AuthForm.css';
 import headerLogo from '../../images/logo-header.svg';
 
-function AuthForm({ head, children, text, path, link }) {
+function AuthForm({ onSubmit, head, children, text, path, link }) {
   const location = useLocation();
   const url = location.pathname === '/signin';
   const buttonText = url ? 'Войти' : 'Зарегистрироваться';
 
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onSubmit();
+  }
+
   return (
-    <section className="auth">
-      <form className="auth__form">
+    <section className="auth" >
+      <form className="auth__form" onSubmit={handleSubmit}>
         <Link to='/' className="auth__form-logo">
           <img className="auth__form-logo-pic" alt="Логотип" src={headerLogo} />
         </Link>
