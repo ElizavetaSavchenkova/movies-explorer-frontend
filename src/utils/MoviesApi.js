@@ -13,20 +13,20 @@ class MoviesApi {
 
   getMovies() {
     return fetch(`${this._url}`,
-    {
-      method: 'GET',
-      headers: this._headers
-    })
+      {
+        method: 'GET',
+        headers: this._headers
+      })
       .then(this._checkResponse);
   }
 }
 
 const moviesApi = new MoviesApi({
-    url: 'https://api.nomoreparties.co/beatfilm-movies',
-	  headers: {
-		  'Content-Type': 'application/json',
-	  },
-  }
+  url: 'https://api.nomoreparties.co/beatfilm-movies',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}
 );
 
 export default moviesApi

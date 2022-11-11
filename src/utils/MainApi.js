@@ -22,10 +22,6 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-
-
-
-
   // Получить сохраненные фильмы
   getMovies() {
     return fetch(`${this._url}/movies`, {
@@ -38,12 +34,8 @@ class Api {
   }
 
 
-
-
-
-
   //Изменение данных профиля
-  editProfile(name, about) {
+  editProfile(name, email) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: {
@@ -52,12 +44,10 @@ class Api {
       },
       body: JSON.stringify({
         name,
-        about,
+        email,
       }),
     }).then((res) => this._checkResponse(res));
   }
-
-
 
 //Удалить сохраненный фильм
   deleteCard(movieId) {
@@ -70,14 +60,44 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
+  //registerUser ({ name, email, password }) {
+   // /return fetch(`${this._url}/signup`, {
+     // method: 'POST',
+      //headers: {
+       // 'Accept': 'application/json',
+       // 'Content-Type': 'application/json'
+      //},
+     // body: JSON.stringify({ name, email, password })
+   // }).then((res) => this._checkResponse(res));
+  //};
 
+ //authorizeUser({ email, password }) {
+    //return fetch(`${this._url}/signin`, {
+     // method: 'POST',
+      //headers: {
+       // 'Accept': 'application/json',
+       // 'Content-Type': 'application/json'
+     // },
+     // body: JSON.stringify({ email, password })
+    //}).then((res) => this._checkResponse(res));
+  //}
 
+//getInfoToken (token) {
+    //return fetch(`${this._url}/users/me`, {
+     // method: 'GET',
+      //headers: {
+       // Accept: 'application/json',
+       // 'Content-Type': 'application/json',
+       // Authorization: `Bearer ${token}`,
+     // },
+    //}).then((res) => this._checkResponse(res));
+  //};
 
   //сохранить фильм в коллекцию
 }
 
 const api = new Api({
-  url: 'http://localhost:3001',
+  url: 'https://api.moviesexplorer.dipl.nomoredomains.sbs',
   headers: {
     "content-type": "application/json"
   }

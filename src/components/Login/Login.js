@@ -4,7 +4,6 @@ import AuthForm from '../AuthForm/AuthForm';
 
 
 function Login({ onLogin }) {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,14 +15,8 @@ function Login({ onLogin }) {
     setPassword(event.target.value);
   }
 
-  //function handleSubmit(event) {
-    //event.preventDefault();
-    //onForm({ email, password });
-   // console.log('handlesubmit в login')
-  //}
-
   function handleLogin () {
-    onLogin(email, password);
+    onLogin({email, password});
     setEmail('');
     setPassword('');
   }
