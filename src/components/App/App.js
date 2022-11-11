@@ -42,8 +42,9 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const history = useHistory();
   const [email, setEmail] = ('');
+  const [name, setName] = ('');
 
-  ///level2
+  ///level 2
   function handleMenuClick() {
     setIsPopupMenuOpen(true);
   }
@@ -51,43 +52,28 @@ function App() {
   function handleCloseMenu() {
     setIsPopupMenuOpen(false);
   }
-  //level3
- //Подгрузить все фильмы/ Подгрузить информацию о пользователе
+  //level 3
+
+//Загрузка токена на странице
+
+
+  //Подгрузить все фильмы/ Подгрузить информацию о пользователе
   useEffect(() => {
     Promise.all([api.getUserInformation(), moviesApi.getMovies([])])
       .then(([data, movies]) => {
         setCurrentUser(data);
-        setMovies({movies})
+        setMovies({ movies })
         console.log(movies)
         console.log(data)
-        console.log(data.email)
-        console.log('Currentuser работает')
+        console.log('getuserinfo ' + data)
+        console.log('getuserinfo ' + data.email)
+        console.log('Currentuser сработал')
       })
       .catch((err) => {
         console.log(err);
-        console.log('currentUser не работает ')
+        console.log('currentUser не работал ')
       });
   }, [loggedIn]);
-
-
-  //Загрузка токена на странице
-  useEffect(() => {
-    const userToken = localStorage.getItem('jwt');
-    if (userToken) {
-      auth.getInfoToken(userToken)
-        .then(() => {
-          //setLoggedIn(true);
-          //setEmail(data.data.email);
-          console.log(userToken);
-          console.log(currentUser.name);
-          console.log(currentUser.email);
-          console.log('Токен подкрепился')
-        }).catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [loggedIn, history]);
-
 
   ///Регистрация пользователя
   function handleRegister({ name, email, password }) {
@@ -111,22 +97,37 @@ function App() {
       .then((res) => {
         localStorage.setItem('jwt', res.token);
         //setLoggedIn(true);
-console.log('Залогинился');
         history.push('/profile');
+        console.log('Залогинился ' + email)
+        console.log(res.token);
       }).catch((err) => {
         console.log(err);
-
       })
   }
 
+  useEffect(() => {
+    const userToken = localStorage.getItem('jwt');
+    if (userToken) {
+      auth.getInfoToken(userToken)
+        .then((data) => {
+          console.log(data)
+          //setLoggedIn(true);
+          console.log('Токен подкрепился')
+        }).catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [loggedIn, history]);
+
   ///Обновить профиль (имя, мэйл)
   function handleUpdateUser({ name, email }) {
-    api.editProfile(name, email)
+    api.editProfile({ name, email })
       .then(() => {
         const editedUserInfo = { ...currentUser };
         editedUserInfo.name = name;
         editedUserInfo.email = email;
         setCurrentUser({ ...editedUserInfo });
+        console.log('Информация встала');
       }).catch((err) => {
         console.log(err);
       });
@@ -147,7 +148,7 @@ console.log('Залогинился');
         <Switch>
 
           <Route exact path="/">
-            <Header  />
+            <Header />
             <Main />
           </Route>
 
@@ -164,8 +165,8 @@ console.log('Залогинился');
             <PopupMenu isOpen={isPopupMenuOpen} onMenuClick={handleCloseMenu} />
 
             <Profile onUpdateUser={handleUpdateUser}
-            onEditProfile={handleUpdateUser}
-            onSignOut={exitProfile}/>
+              onEditProfile={handleUpdateUser}
+              onSignOut={exitProfile} />
           </Route>
 
           <Route path="/movies">

@@ -6,8 +6,9 @@ import './Profile.css';
 
 function Profile({ onUpdateUser, onEditProfile, onSignOut }) {
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -17,6 +18,7 @@ function Profile({ onUpdateUser, onEditProfile, onSignOut }) {
   useEffect(() => {
     setName(currentUser.name);
     setEmail(currentUser.email);
+    console.log(currentUser.email);
     console.log(currentUser.email)
   }, [currentUser])
 
