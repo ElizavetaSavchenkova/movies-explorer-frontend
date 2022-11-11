@@ -35,7 +35,7 @@ class Api {
 
 
   //Изменение данных профиля
-  editProfile(name, email) {
+  editProfile({name, email}) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: {
@@ -60,40 +60,6 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  //registerUser ({ name, email, password }) {
-   // /return fetch(`${this._url}/signup`, {
-     // method: 'POST',
-      //headers: {
-       // 'Accept': 'application/json',
-       // 'Content-Type': 'application/json'
-      //},
-     // body: JSON.stringify({ name, email, password })
-   // }).then((res) => this._checkResponse(res));
-  //};
-
- //authorizeUser({ email, password }) {
-    //return fetch(`${this._url}/signin`, {
-     // method: 'POST',
-      //headers: {
-       // 'Accept': 'application/json',
-       // 'Content-Type': 'application/json'
-     // },
-     // body: JSON.stringify({ email, password })
-    //}).then((res) => this._checkResponse(res));
-  //}
-
-//getInfoToken (token) {
-    //return fetch(`${this._url}/users/me`, {
-     // method: 'GET',
-      //headers: {
-       // Accept: 'application/json',
-       // 'Content-Type': 'application/json',
-       // Authorization: `Bearer ${token}`,
-     // },
-    //}).then((res) => this._checkResponse(res));
-  //};
-
-  //сохранить фильм в коллекцию
 }
 
 const api = new Api({

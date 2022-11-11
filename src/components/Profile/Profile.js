@@ -4,7 +4,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import './Profile.css';
 
 
-function Profile({ onUpdateUser, onEditProfile, onSignOut }) {
+function Profile({ onEditProfile, onSignOut }) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName] = useState('');
@@ -12,7 +12,7 @@ function Profile({ onUpdateUser, onEditProfile, onSignOut }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    onUpdateUser({ name, email });
+    onEditProfile({ name, email });
   }
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function Profile({ onUpdateUser, onEditProfile, onSignOut }) {
               placeholder="Email" required onChange={handleСhangeEmailProfile} value={email || ''} />
           </label>
           <div className="profile__buttons">
-            <button aria-label="Редактировать профиль" className="profile__button" type="submit" onClick={onEditProfile}>Редактировать</button>
+            <button aria-label="Редактировать профиль" className="profile__button" type="submit">Редактировать</button>
             <button aria-label="Выйти из аккаунта" className="profile__button profile__button_logout" type="submit" onClick={onSignOut}>Выйти из аккаунта</button>
           </div>
         </fieldset>

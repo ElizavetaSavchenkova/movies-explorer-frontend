@@ -63,17 +63,28 @@ function App() {
       .then(([data, movies]) => {
         setCurrentUser(data);
         setMovies({ movies })
-        console.log(movies)
+       console.log(movies)
         console.log(data)
         console.log('getuserinfo ' + data)
         console.log('getuserinfo ' + data.email)
         console.log('Currentuser сработал')
       })
       .catch((err) => {
-        console.log(err);
+       console.log(err);
         console.log('currentUser не работал ')
       });
   }, [loggedIn]);
+
+//function getInfo(){
+  //api.getUserInformation()
+  //.then((data) => {
+   // setCurrentUser(data);
+  //}).catch((err) => {
+   // console.log(err);
+   // console.log('Ошибка в info')
+  //});
+//}
+
 
   ///Регистрация пользователя
   function handleRegister({ name, email, password }) {
@@ -96,7 +107,8 @@ function App() {
     auth.authorizeUser({ email, password })
       .then((res) => {
         localStorage.setItem('jwt', res.token);
-        //setLoggedIn(true);
+        setLoggedIn(true);
+        //getInfo(res.data);
         history.push('/profile');
         console.log('Залогинился ' + email)
         console.log(res.token);
@@ -111,7 +123,7 @@ function App() {
       auth.getInfoToken(userToken)
         .then((data) => {
           console.log(data)
-          //setLoggedIn(true);
+          setLoggedIn(true);
           console.log('Токен подкрепился')
         }).catch((err) => {
           console.log(err);
@@ -121,7 +133,7 @@ function App() {
 
   ///Обновить профиль (имя, мэйл)
   function handleUpdateUser({ name, email }) {
-    api.editProfile({ name, email })
+    api.editProfile({name, email})
       .then(() => {
         const editedUserInfo = { ...currentUser };
         editedUserInfo.name = name;
@@ -130,13 +142,14 @@ function App() {
         console.log('Информация встала');
       }).catch((err) => {
         console.log(err);
+        console.log('PATCH не работает')
       });
   }
 
   //выход из профиля
   function exitProfile() {
     localStorage.removeItem('jwt');
-    //setLoggedIn(false);
+    setLoggedIn(false);
     //setEmail('');
     history.push('/signin');
     console.log('Выход выполнен')
@@ -163,8 +176,7 @@ function App() {
           <Route path="/profile">
             <Header loggedIn="true" onMenuClick={handleMenuClick} />
             <PopupMenu isOpen={isPopupMenuOpen} onMenuClick={handleCloseMenu} />
-
-            <Profile onUpdateUser={handleUpdateUser}
+            <Profile
               onEditProfile={handleUpdateUser}
               onSignOut={exitProfile} />
           </Route>
