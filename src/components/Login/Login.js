@@ -15,8 +15,8 @@ function Login({ onLogin }) {
     setPassword(event.target.value);
   }
 
-  function handleLogin () {
-    onLogin({email, password});
+  function handleLogin() {
+    onLogin({ email, password });
     setEmail('');
     setPassword('');
   }

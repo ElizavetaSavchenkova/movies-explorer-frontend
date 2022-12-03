@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation'
 import headerLogo from '../../images/logo-header.svg';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import './Header.css';
 
 function Header({ loggedIn, onMenuClick }) {
+  const location = useLocation();
+  const path = location.pathname === '/';
   return (
-    <header className={`header ${loggedIn ? "header_theme_light" : ""}`}>
+    <header className={`header ${loggedIn ? "header_theme_light" : ""} && ${path ? "header_theme_new" : ""}`}>
       <div className="header__container">
         <Link to="/">
           <img className="header__logo" src={headerLogo} alt="Логотип" />

@@ -10,12 +10,13 @@
 .movies__card-description {
   margin: 0;
   padding: 15px 14px 14px;
-  ;
-  max-width: 364px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   background-color: #FDFDFD;
   box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .movies__card-description-text {
@@ -27,11 +28,15 @@
 .movies__card-title {
   margin: 0;
   padding: 0 0 9px 0;
+  max-width: 300px;
   font-weight: 500;
   font-size: 15px;
   line-height: 18px;
   color: #000000;
   box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .movies__card-duration {
@@ -88,22 +93,36 @@
   opacity: 0.6;
 }
 
+.movies__card-link-trailer {
+  max-width: 364px;
+}
+
 @media screen and (max-width:800px) {
   .movies__card {
     height: 258px;
+    width: 100%;
   }
 
   .movies__image {
     height: 190px;
+  }
+
+  .movies__card-title {
+    max-width: 225px;
   }
 }
 
 @media screen and (max-width:650px) {
   .movies__card {
     height: 236px;
+    width: 100%;
   }
 
   .movies__image {
     height: 168px;
+  }
+
+  .movies__card-title {
+    max-width: 225px;
   }
 }

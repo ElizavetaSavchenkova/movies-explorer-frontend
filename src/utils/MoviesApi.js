@@ -12,11 +12,10 @@ class MoviesApi {
   }
 
   getMovies() {
-    return fetch(`${this._url}`,
-      {
-        method: 'GET',
-        headers: this._headers
-      })
+    return fetch(`${this._url}`, {
+      method: 'GET',
+      headers: this._headers
+    })
       .then(this._checkResponse);
   }
 }
@@ -26,7 +25,6 @@ const moviesApi = new MoviesApi({
   headers: {
     'Content-Type': 'application/json',
   },
-}
-);
+});
 
 export default moviesApi

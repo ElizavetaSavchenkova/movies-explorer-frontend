@@ -1,8 +1,8 @@
-export const url = 'https://api.moviesexplorer.dipl.nomoredomains.sbs';
+export const url = 'http://localhost:3001';
+//'https://api.moviesexplorer.dipl.nomoredomains.sbs'
 
 function checkResponse(res) {
   if (res.ok) {
-    console.log(res.json)
     return res.json();
   }
   return Promise.reject(`Ошибка: ${res.status}`);

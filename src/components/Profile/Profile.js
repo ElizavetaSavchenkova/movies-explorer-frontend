@@ -4,9 +4,8 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import './Profile.css';
 
 
-function Profile({ onEditProfile, onSignOut }) {
+function Profile({ onEditProfile, onSignOut, loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -16,11 +15,13 @@ function Profile({ onEditProfile, onSignOut }) {
   }
 
   useEffect(() => {
-    setName(currentUser.name);
-    setEmail(currentUser.email);
-    console.log(currentUser.email);
-    console.log(currentUser.email)
-  }, [currentUser])
+    if (loggedIn){
+      setName(currentUser.name);
+      setEmail(currentUser.email);
+      console.log(currentUser.email);
+
+    }
+  }, [loggedIn, currentUser])
 
   function handleChangeNameProfile(event) {
     setName(event.target.value)

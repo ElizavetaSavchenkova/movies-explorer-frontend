@@ -4,6 +4,11 @@
   background-color: #ffffff;
 }
 
+.navigation_theme_dark {
+  background-color: #5C5C5C;
+  color: #ffffff;
+}
+
 .navigation__container {
   margin: 0;
   padding: 0;
@@ -30,6 +35,10 @@
   color: #000000;
   text-decoration: none;
   transition: opacity 1s ease-in;
+}
+
+.navigation__films-link_theme_dark {
+  color: #ffffff;
 }
 
 .navigation__films-link:hover {
@@ -73,6 +82,10 @@
   font-size: 14px;
   line-height: 16px;
   color: #000000;
+}
+
+.navigation__profile-text_theme_dark {
+  color: #ffffff;
 }
 
 @media screen and (max-width: 800px) {

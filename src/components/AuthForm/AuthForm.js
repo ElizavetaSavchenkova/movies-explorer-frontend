@@ -7,8 +7,8 @@ function AuthForm({ onSubmit, head, children, text, path, link }) {
   const url = location.pathname === '/signin';
   const buttonText = url ? 'Войти' : 'Зарегистрироваться';
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
     onSubmit();
   }
 
