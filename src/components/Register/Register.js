@@ -1,56 +1,102 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { url } from '../../utils/auth';
 import AuthForm from '../AuthForm/AuthForm';
+import { useFormWithValidation } from "../FormValidation/FormValidation";
 
-function Register({ onRegister }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('')
+function Register({ onRegister, errorText }) {
+  //const [email, setEmail] = useState('');
+  //const [password, setPassword] = useState('');
+  // const [name, setName] = useState('');
 
-  function handleNameChange(event) {
-    setName(event.target.value);
-  }
+  //const {name, email, password} = values;
+  //props.onRegister({name, email, password});
 
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
-  }
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  function handlePasswordChange(event) {
-    setPassword(event.target.value);
-  }
+  //function handleNameChange(event) {
+  //setName(event.target.value);
+  //}
+
+  //function handleEmailChange(event) {
+  //setEmail(event.target.value);
+  //}
+
+  //function handlePasswordChange(event) {
+  //setPassword(event.target.value);
+  // }
+
 
   function handleRegister() {
-    onRegister({ name, email, password });
-    setName('');
-    setEmail('');
-    setPassword('');
-    console.log(name)
+    console.log('Привет')
+    console.log(values)
+    //const {name, email, password} = values
+    //console.log(values.email, name, password)
+    onRegister(values);
+
+    ////старая версия
+    //onRegister({ name, email, password });
+    //setName('');
+    //setEmail('');
+    //setPassword('');
+    //console.log(name)
+
   }
+
+
+
+
 
   return (
     <>
       <AuthForm
+        isValid={isValid}
         onSubmit={handleRegister}
         head="Добро пожаловать!"
         children={
           <>
             <label className="auth__form-label">
               <span className="auth__form-input-name">Имя</span>
-              <input className="auth__form-input" id="nameReg" name="nameRegInput" type="text"
-                placeholder="Имя" required value={name || ''} onChange={handleNameChange} />
-              <span className="auth__form-input-error"></span>
+              <input className={`auth__form-input ${errors.name ? "auth__form-input_error" : ""} ${values.name ? "auth__form-input_valid" : ""}`}
+                id="nameReg"
+                name="name"
+                type="text"
+                placeholder="Имя"
+                minLength="2"
+                maxLength="30"
+                required
+                value={values.name || ''}
+                onChange={handleChange}
+              />
+              <span className="auth__form-input-error">{errors.name}</span>
             </label>
             <label className="auth__form-label">
               <span className="auth__form-input-name">E-mail</span>
-              <input className="auth__form-input auth__form-input_email" id="emailReg" type="email" name="emailRegInput"
-                placeholder="Email" required value={email || ''} onChange={handleEmailChange} />
-              <span className="auth__form-input-error"></span>
+              <input className={`auth__form-input ${errors.email ? "auth__form-input_error" : ""} ${values.email ? "auth__form-input_valid" : ""}`}
+                id="emailReg"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                value={values.email || ''}
+                onChange={handleChange} />
+              <span className="auth__form-input-error">{errors.email}</span>
             </label>
             <label className="auth__form-label">
               <span className="auth__form-input-name">Пароль</span>
-              <input className="auth__form-input auth__form-input_password" id="passwordReg" type="password" name="passwordRegInput"
-                placeholder="Пароль" autoComplete="off" required value={password || ''} onChange={handlePasswordChange} />
-              <span className="auth__form-input-error">Что-то пошло не так...</span>
+              <input className={`auth__form-input ${errors.password ? "auth__form-input_error" : ""} ${values.password ? "auth__form-input_valid" : ""}`}
+                id="passwordReg"
+                type="password"
+                name="password"
+                placeholder="Пароль"
+                autoComplete="off"
+                minLength="8"
+                maxLength="30"
+                required
+                value={values.password || ''}
+                onChange={handleChange}
+              />
+              <span className="auth__form-input-error">{errors.password}</span>
             </label>
           </>
         }
@@ -58,6 +104,7 @@ function Register({ onRegister }) {
         text="Уже зарегистрированы?"
         path="/signin"
         link="Войти"
+        errorText={errorText}
       />
     </>
   );
@@ -65,4 +112,3 @@ function Register({ onRegister }) {
 
 export default Register
 
-//что-то пошло не так вставлено для примера, т.к. пока не прописана валидация"//

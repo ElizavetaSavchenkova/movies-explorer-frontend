@@ -6,7 +6,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import './Movies.css';
 
-function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies }) {
+function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies, userMovies}) {
   const [keyword, setKeyword] = useLocalStorage('keyword', '');
   const [errorMessage, setErrorMessage] = useState('');
   const [query, setQuery] = useState(false);
@@ -23,6 +23,8 @@ function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies }
 
   useEffect(() => {
     console.log(checkbox + 'CHECKBOX')
+    console.log('userMovies')
+    console.log(userMovies)
   })
 
   function handleSubmitFormFilms(event) {
@@ -141,6 +143,7 @@ function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies }
       ) : successfulSearch ? (
         <MoviesCardList
           movies={findMovies}
+          savedMovies={userMovies}
           handleAddFav={handleAddFav}
           handleSaveMovie={handleSaveMovie}
           handleDeleteMovies={handleDeleteMovies}

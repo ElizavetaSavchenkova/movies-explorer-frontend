@@ -4,6 +4,7 @@ import './PopupMenu.css';
 import profileIcon from '../../images/profile-icon.svg';
 
 function PopupMenu({ isOpen, onMenuClick }) {
+
   return (
     <section className={`popup-menu ${isOpen ? 'popup-menu_is-opened' : ''}`}>
       <div className="popup-menu__container">

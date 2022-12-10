@@ -55,7 +55,9 @@ function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, curre
 
   useEffect(() => {
     setFindMovies(userMovies.filter((movie) => movie.owner === currentUser._id))
-  }, [userMovies, currentUser])
+  }, [userMovies, currentUser]);
+
+
 
   useEffect(() => {
     const savedUserMovies = userMovies.filter((movie) => movie.owner === currentUser._id);
@@ -75,6 +77,7 @@ function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, curre
       } else {
         setFindMovies(searchResults);
         localStorage.setItem('savedUserMovies', JSON.stringify(savedUserMovies));
+        console.log('SAVEDMOVIES')
         console.log('newSearchResult')
         console.log(newSearchResult)
         console.log(searchResults)

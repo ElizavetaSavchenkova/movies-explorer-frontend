@@ -7,15 +7,53 @@ import './MoviesCardList.css';
 
 function MoviesCardList({ movies, savedMovies, handleSaveMovie, handleDeleteMovies }) {
 
-  const [width, setWidth] = useState(1280)
+  const [width, setWidth] = useState(window.innerWidth);
+  const [amount, setAmount] = useState(12);
 
-  useEffect(()=> {
-    if (width < 768) {
-      console.log('ШИРИНА')
+  useEffect(() => {
+    if (width >= 1280) {
+      setAmount(12);
     }
-  })
+    if (width <= 1100) {
+      setAmount(8);
+    }
+    if (width <= 650) {
+      setAmount(5);
+    }
+  }, [width])
 
-  let cardList = movies.slice(0);
+  function handleMoreMovies() {
+    if (width >= 1280) {
+      setAmount(amount + 3);
+    } else {
+      setAmount(amount + 2);
+    }
+  }
+
+  function throttle(func, timeout) {
+    let timer = null
+    return function (...args) {
+      if (!timer) {
+        timer = setTimeout(() => {
+          func.call(this, ...args)
+          timer = null
+        }, timeout)
+      }
+    }
+  }
+
+  useEffect(() => {
+    const updateWidth = throttle(() => {
+      setWidth(window.innerWidth);
+    }, 500);
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
+  let cardList = movies.slice(0, amount);
+
+  const buttonMoreMovies = movies.length > 0 && movies.length > amount;
+
   return (
     <section className="movies">
       <div className="movies__cardlist">
@@ -26,21 +64,17 @@ function MoviesCardList({ movies, savedMovies, handleSaveMovie, handleDeleteMovi
             savedMovies={savedMovies}
             handleSaveMovie={handleSaveMovie}
             handleDeleteMovies={handleDeleteMovies}
-          //handleAddFav={handleAddFav}
           />
         ))}
       </div>
+      {buttonMoreMovies && (
+        <button aria-label="Просмотреть еще карточки" className="movies__cardlist-button" type="button"
+          onClick={handleMoreMovies}>
+          Ещё
+        </button>
+      )}
     </section >
   );
 }
 
 export default MoviesCardList;
-
-//кнопка "Еще" скрыта для примера, как на макете//
-// временно стоит по 12 и 3 карточки. потом вставлять через массив"
-
-
-
-
-
-

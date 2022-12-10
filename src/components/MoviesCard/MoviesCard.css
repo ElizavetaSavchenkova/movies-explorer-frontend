@@ -68,7 +68,7 @@
   cursor: pointer;
 }
 
-.movies__card-button_disaible {
+.movies__card-button_disable {
   background-image: url(../../images/saveicon-disable.svg);
   background-color: #F9F9F9;
   background-position: center;

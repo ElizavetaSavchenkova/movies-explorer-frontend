@@ -22,7 +22,6 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  // Получить сохраненные фильмы
   getMovies() {
     return fetch(`${this._url}/movies`, {
       method: 'GET',
@@ -88,6 +87,8 @@ class Api {
         nameEN: movie.nameEN,
         thumbnail: movie.thumbnail,
         movieId: movie.movieId,
+
+        //movieId: movie.id,
       }),
     }).then((res) => this._checkResponse(res));
   }

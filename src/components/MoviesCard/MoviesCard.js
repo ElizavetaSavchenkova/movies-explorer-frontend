@@ -1,20 +1,18 @@
 
 import React from "react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import './MoviesCard.css';
 import movieImg from '../../images/film1.svg';
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 
-function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies }) {
-  const [saved, setSaved] = useState(true);
+function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies, savedMovies }) {
   const location = useLocation();
   const urlsave = location.pathname === "/saved-movies";
   const url = location.pathname === "/movies";
-  const [meow, setMeow] = useState(false);
   const { nameRU, duration, image, trailerLink, trailer } = movie;
-
-  //const movieDuration = (movie) => `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`
+  const [buttonState, setButtonState] = useState(false);
+  const addedMovie = savedMovies.find((i) => i.movieId === movie.id);
+  const mathDuration = movie.duration >= 60 ? `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м` : `${movie.duration % 60}м`;
 
   const movieInformation = {
     country: movie.country || "Информация отсутствует",
@@ -30,57 +28,25 @@ function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies }) {
     movieId: movie.id,
   };
 
-  const [buttonState, setButtonState] = useState(false);
+  function deleteFavMovie() {
+    //alert(JSON.stringify(addedMovie._id));
+    handleDeleteMovies(addedMovie._id);
+    setButtonState(false)
 
-  //useEffect(() => {
-  //setButtonState(false)
-  //})
 
-  function addedMovie() {
-    //setSaved(false)
+  }
+
+  function addFavMovie() {
     setButtonState(true)
-    console.log(buttonState)
-    //setMeow(true)
     handleSaveMovie(movieInformation);
-    console.log(saved);
-    console.log(meow)
-    console.log(movieInformation)
-    console.log('Карточка сохранилась')
+  }
+
+  function deleteSaveMovie() {
+    const id = movie._id;
+    //handleDeleteMovies(id);
+    console.log(movie._id)
+    handleDeleteMovies(id)
   };
-
-  //const deletedMovie = () => {
-  // const movieId = movie.movieId
-  //const id = movie.id;
-  //const ids = movie._id;
-  //handleDeleteMovies(ids);
-  //setSaved(false)
-  //console.log(saved)
-  //console.log(movie.movieId)
-  //console.log(movie)
-  //console.log(movieId)
-  //console.log(id)
-  //console.log(movieInformation.movieId)
-  //console.log(ids)
-  //console.log('Карточка удалилась')
-  //};
-
-  function deletedMovie() {
-    const movieId = movie.movieId
-    const id = movie.id;
-    const ids = movie._id;
-    handleDeleteMovies(ids);
-    setSaved(false)
-    console.log(saved)
-    console.log(movie.movieId)
-    console.log(movie)
-    console.log(movieId)
-    console.log(id)
-    console.log(movieInformation.movieId)
-    console.log(ids)
-    console.log('Карточка удалилась')
-  };
-
-  const mathDuration = movie.duration >= 60 ? `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м` : `${movie.duration % 60}м`;
 
   return (
     <div className="movies__card">
@@ -89,14 +55,15 @@ function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies }) {
           <h3 className="movies__card-title">{nameRU}</h3>
           <p className="movies__card-duration">{mathDuration}</p>
         </div>
-        {url &&
-          <button aria-label="Добавить в избранное" className={`movies__card-button movies__card-button${!buttonState ? '_disaible' : '_active'}`} type="button" onClick={addedMovie} />
+        {url && <button aria-label="Добавить фильм в избранное"
+          className={`movies__card-button movies__card-button${!buttonState ? '_disable' : '_active'} ${addedMovie && 'movies__card-button_active'}`}
+          type="button"
+          onClick={addedMovie ? deleteFavMovie : addFavMovie} />
         }
-        {urlsave &&
-          <button aria-label="Добавить в избранное" className='movies__card-button movies__card-button_delete' type="button" onClick={deletedMovie} />
+        {urlsave && <button aria-label="Удалить фильм из избранного"
+          className='movies__card-button movies__card-button_delete'
+          type="button" onClick={deleteSaveMovie} />
         }
-
-
       </div>
       <a className="movies__card-link-trailer" href={trailerLink ? trailerLink : trailer} target="_blank" rel="noreferrer">
         <img src={image.url ? `https://api.nomoreparties.co${image.url}` : image} className="movies__image" alt="Фотокарточка фильма" />
@@ -106,3 +73,4 @@ function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies }) {
 }
 
 export default MoviesCard;
+
