@@ -96,10 +96,11 @@ function App() {
 
   //Подгрузить все фильмы/ Подгрузить информацию о пользователе
   useEffect(() => {
-    Promise.all([api.getUserInformation(), moviesApi.getMovies([])])
+    if(loggedIn){
+      Promise.all([api.getUserInformation(), moviesApi.getMovies([])])
       .then(([data, movies]) => {
         setCurrentUser(data);
-        setMovies({ movies })
+        setMovies( movies )
         console.log('ПОКАЖИ МУВИС')
         console.log(movies)
         const user = data._id;
@@ -108,7 +109,9 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, [loggedIn]);
+    }
+
+  }, [loggedIn, setMovies]);
 
   ///Регистрация пользователя
   function handleRegister({ name, email, password }) {
