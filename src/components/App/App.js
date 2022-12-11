@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLocalStorage } from '../LocalStorageTemplate/LocalStorageTemplate';
-import Main from '../Main/Main'
+import Main from '../Main/Main';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Register from '../Register/Register';
@@ -19,60 +19,44 @@ import api from '../../utils/MainApi';
 import * as auth from '../../utils/auth';
 import moviesApi from '../../utils/MoviesApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import InfoTooltip from '../InfoTooltip/InfoTooltip'
-import './App.css';
-
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import useCloseButtons from '../useCloseButtons/useCloseButtons';
+import './App.css';
 
 function App() {
   const location = useLocation();
   const history = useHistory();
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [movies, setMovies] = useState([]);
+
   const [currentUser, setCurrentUser] = useState({});
-  const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
   const [userMovies, setUserMovies] = useState([]);
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
   const [allMovies, setAllMovies] = useLocalStorage('allMovies', []);
-  const [user, setUser] = useState('')
+
+  const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [infoMessage, setInfoMessage] = useState(false);
+  const [errorText, setErrorText] = useState('')
   const header = ['/', '/movies', '/saved-movies', '/profile'];
   const footer = ['/', '/movies', '/saved-movies'];
   const popup = ['/', '/movies', '/saved-movies', '/profile'];
-
-  const [errorText, setErrorText] = useState('')
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
-  const [infoMessage, setInfoMessage] = useState(false);
-
   useCloseButtons(closeAllPopups, isInfoTooltipOpen);
 
+
   ///level 3
-  const [movies, setMovies] = useState([]);
+  useEffect(()=> {
+    console.log(allMovies)
+  })
+
+  Array.from(allMovies)
+  var a = Array.isArray(allMovies)
+  console.log(a + 'allMovies')
+
   const [message, setMessage] = useState('')
+  const [user, setUser] = useState('')
 
-
-  useEffect(() => {
-    function handleClickOverlay(e) {
-      if (e.target.classList.contains("popup-menu")) {
-        if (isPopupMenuOpen) {
-          setIsPopupMenuOpen(false);
-        }
-      }
-    }
-
-    function handleClickButton() {
-      if (isPopupMenuOpen) {
-        setIsPopupMenuOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOverlay);
-    document.addEventListener("keyup", handleClickButton);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOverlay);
-      document.removeEventListener("keyup", handleClickButton);
-    };
-  }, [setIsPopupMenuOpen, isPopupMenuOpen]);
-
-  ///level 2
   function handleMenuClick() {
     setIsPopupMenuOpen(true);
   }
@@ -81,25 +65,19 @@ function App() {
     setIsPopupMenuOpen(false);
   }
 
+  function handleInfoTooltipOpen() {
+    setIsInfoTooltipOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsInfoTooltipOpen(false);
+  }
 
   function showAuthError(message) {
     setErrorText(message)
     setTimeout(() => {
       setErrorText('')
     }, 5000)
-  }
-
-  function handleInfoTooltipOpen() {
-    setIsInfoTooltipOpen(true);
-  }
-
-  function closeAllPopups() {
-    // setIsEditAvatarPopupOpen(false)
-    // setIsEditProfilePopupOpen(false)
-    //setIsAddPlacePopupOpen(false)
-    setIsInfoTooltipOpen(false);
-
-
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////level 3
@@ -122,16 +100,15 @@ function App() {
       .then(([data, movies]) => {
         setCurrentUser(data);
         setMovies({ movies })
-        //setLoggedIn(true);
-        //localStorage.setItem('apiBeatFilms', JSON.stringify({ movies }));
+        console.log('ПОКАЖИ МУВИС')
+        console.log(movies)
         const user = data._id;
-        setUser(user)
+        setUser(user);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [loggedIn]);
-  ////////////////////////////////////////////////////////////////////////////
 
   ///Регистрация пользователя
   function handleRegister({ name, email, password }) {
@@ -140,7 +117,6 @@ function App() {
         handleLogin({ email, password })
         handleInfoTooltipOpen();
         setInfoMessage(true)
-        //setSuccessfulMessage(true)
       }).catch((err) => {
         console.log(err);
         handleInfoTooltipOpen();
@@ -160,16 +136,22 @@ function App() {
     auth.authorizeUser({ email, password })
       .then((res) => {
         localStorage.setItem('jwt', res.token);
-        //setCurrentUser(res.data)
-        //setCurrentUser({ res  })
         setLoggedIn(true);
         history.push('/movies');
         handleInfoTooltipOpen();
         setInfoMessage(true)
+        console.log(localStorage)
       }).catch((err) => {
         console.log(err);
         handleInfoTooltipOpen();
-        setInfoMessage(false)
+        setInfoMessage(false);
+        if (err.includes(401)) {
+          showAuthError('При попытке входа указан неверный логин/пароль. Пожалуйста, укажите корректные данные.')
+        } else if (err.includes(400)) {
+          showAuthError('К сожалению, произошла ошибка при попытке входа. Пожалуйста, повторите попытку снова.')
+        } else {
+          showAuthError('К сожалению, произошла ошибка на сервере. Пожалуйста, повторите попытку регистрации позднее.')
+        }
       })
   }
 
@@ -206,6 +188,7 @@ function App() {
       moviesApi.getMovies()
         .then((data) => {
           setAllMovies(data);
+          console.log(data)
         })
         .catch((err) => {
           console.log(err);
@@ -236,7 +219,6 @@ function App() {
       })
   };
 
-
   function handleDeleteMovies(movieId) {
     api.deleteMovie(movieId)
       .then(() => {
@@ -248,12 +230,6 @@ function App() {
       });
   }
 
-
-
-
-
-
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -264,21 +240,19 @@ function App() {
           <PopupMenu isOpen={isPopupMenuOpen} onMenuClick={handleCloseMenu} />
         ) : null}
         <Switch>
-
           <Route exact path="/">
             <Main />
           </Route>
-
           <Route path="/signup">
             <Register
               onRegister={handleRegister}
               errorText={errorText} />
           </Route>
-
           <Route path="/signin">
-            <Login onLogin={handleLogin} />
+            <Login
+              onLogin={handleLogin}
+              errorText={errorText} />
           </Route>
-
           <ProtectedRoute
             exact path='/profile'
             loggedIn={loggedIn}
@@ -294,7 +268,6 @@ function App() {
             userMovies={userMovies}
             handleSaveMovie={handleSaveMovie}
             handleDeleteMovies={handleDeleteMovies}
-
           />
           <ProtectedRoute
             exact path='/saved-movies'
@@ -303,16 +276,11 @@ function App() {
             userMovies={userMovies}
             handleDeleteMovies={handleDeleteMovies}
             currentUser={currentUser}
-
           />
-
-
           <Route path="*">
             <NotFound />
           </Route>
-
         </Switch>
-
         <InfoTooltip
           name={"info"}
           isOpen={isInfoTooltipOpen}
@@ -323,7 +291,6 @@ function App() {
         {footer.includes(location.pathname) ? <Footer /> : null}
       </div >
     </CurrentUserContext.Provider>
-
   );
 }
 

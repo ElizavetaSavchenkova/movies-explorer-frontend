@@ -100,16 +100,6 @@
   border-bottom: 1px solid #E8E8E8;
 }
 
-/*.auth__form-input_password {
-  color: #000000;
-}
-
-/*.auth__form-input_email {
-  border-bottom: 1px solid #2BE080;
-}*/
-
-
-
 .auth__form-input::placeholder {
   color: #A0A0A0;
 }
@@ -163,10 +153,7 @@
   font-size: 14px;
   line-height: 17px;
   color: #ffffff;
-  /*background-color: grey;*/
-  /*background-color:#A0A0A0;*/
   background-color: #E8E8E8;
-
   border-radius: 3px;
   border: none;
   cursor: pointer;
@@ -221,7 +208,6 @@
 .auth__form-text-link:hover {
   opacity: 0.6;
 }
-
 
 @media screen and (min-width:550px) and (max-width:1023px) {
   .auth {
