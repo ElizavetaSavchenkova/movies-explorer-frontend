@@ -26,36 +26,22 @@ import './App.css';
 function App() {
   const location = useLocation();
   const history = useHistory();
-  const [movies, setMovies] = useState([]);
-
+  //const [movies, setMovies] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [userMovies, setUserMovies] = useState([]);
-
   const [loggedIn, setLoggedIn] = useState(false);
-
   const [allMovies, setAllMovies] = useLocalStorage('allMovies', []);
-
   const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoMessage, setInfoMessage] = useState(false);
-  const [errorText, setErrorText] = useState('')
+  const [errorText, setErrorText] = useState('');
+  const [errorMovieMessage, setErrorMovieMessage] = useState('')
   const header = ['/', '/movies', '/saved-movies', '/profile'];
   const footer = ['/', '/movies', '/saved-movies'];
   const popup = ['/', '/movies', '/saved-movies', '/profile'];
   useCloseButtons(closeAllPopups, isInfoTooltipOpen);
 
-
-  ///level 3
-  useEffect(()=> {
-    console.log(allMovies)
-  })
-
-  Array.from(allMovies)
-  var a = Array.isArray(allMovies)
-  console.log(a + 'allMovies')
-
-  const [message, setMessage] = useState('')
-  const [user, setUser] = useState('')
+  const REQUEST_ERROR = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
 
   function handleMenuClick() {
     setIsPopupMenuOpen(true);
@@ -80,7 +66,6 @@ function App() {
     }, 5000)
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////level 3
   useEffect(() => {
     const userToken = localStorage.getItem('jwt');
     if (userToken) {
@@ -94,24 +79,33 @@ function App() {
     }
   }, [loggedIn, history]);
 
+  useEffect(() => {
+    if (loggedIn) {
+      api.getUserInformation()
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [loggedIn]);
+
   //Подгрузить все фильмы/ Подгрузить информацию о пользователе
   useEffect(() => {
-    if(loggedIn){
-      Promise.all([api.getUserInformation(), moviesApi.getMovies([])])
-      .then(([data, movies]) => {
-        setCurrentUser(data);
-        setMovies( movies )
-        console.log('ПОКАЖИ МУВИС')
-        console.log(movies)
-        const user = data._id;
-        setUser(user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
+    if (loggedIn) {
+      moviesApi.getMovies([])
+        .then((movies) => {
+          setAllMovies(movies)
 
-  }, [loggedIn, setMovies]);
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrorMovieMessage(REQUEST_ERROR)
+        });
+    }
+  }, [loggedIn, setAllMovies]);
+
 
   ///Регистрация пользователя
   function handleRegister({ name, email, password }) {
@@ -141,9 +135,6 @@ function App() {
         localStorage.setItem('jwt', res.token);
         setLoggedIn(true);
         history.push('/movies');
-        handleInfoTooltipOpen();
-        setInfoMessage(true)
-        console.log(localStorage)
       }).catch((err) => {
         console.log(err);
         handleInfoTooltipOpen();
@@ -185,19 +176,6 @@ function App() {
     localStorage.removeItem('checkboxState')
     history.push('/signin');
   }
-
-  useEffect(() => {
-    if (loggedIn && allMovies.length < 1) {
-      moviesApi.getMovies()
-        .then((data) => {
-          setAllMovies(data);
-          console.log(data)
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, [loggedIn, allMovies, setAllMovies, setLoggedIn]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -271,6 +249,7 @@ function App() {
             userMovies={userMovies}
             handleSaveMovie={handleSaveMovie}
             handleDeleteMovies={handleDeleteMovies}
+            errorMovieMessage={errorMovieMessage}
           />
           <ProtectedRoute
             exact path='/saved-movies'
@@ -290,7 +269,6 @@ function App() {
           onClose={closeAllPopups}
           infoMessage={infoMessage}>
         </InfoTooltip>
-
         {footer.includes(location.pathname) ? <Footer /> : null}
       </div >
     </CurrentUserContext.Provider>

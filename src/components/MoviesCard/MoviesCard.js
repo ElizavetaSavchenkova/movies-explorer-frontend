@@ -9,7 +9,7 @@ function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies, savedMovies })
   const location = useLocation();
   const urlsave = location.pathname === "/saved-movies";
   const url = location.pathname === "/movies";
-  const { nameRU, duration, image, trailerLink, trailer } = movie;
+  const { nameRU, image, trailerLink, trailer } = movie;
   const [buttonState, setButtonState] = useState(false);
   const addedMovie = savedMovies.find((i) => i.movieId === movie.id);
   const mathDuration = movie.duration >= 60 ? `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м` : `${movie.duration % 60}м`;
@@ -29,11 +29,8 @@ function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies, savedMovies })
   };
 
   function deleteFavMovie() {
-    //alert(JSON.stringify(addedMovie._id));
     handleDeleteMovies(addedMovie._id);
     setButtonState(false)
-
-
   }
 
   function addFavMovie() {
@@ -43,8 +40,6 @@ function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies, savedMovies })
 
   function deleteSaveMovie() {
     const id = movie._id;
-    //handleDeleteMovies(id);
-    console.log(movie._id)
     handleDeleteMovies(id)
   };
 

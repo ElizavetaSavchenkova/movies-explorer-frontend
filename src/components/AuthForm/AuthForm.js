@@ -25,8 +25,7 @@ function AuthForm({ onSubmit, head, children, text, path, link, isValid, errorTe
           <button
             className={`auth__button ${!url ? "auth__button_register" : ""} ${!isValid ? "auth__button_disabled" : ''}`}
             type="submit"
-            disabled={!isValid}
-          >
+            disabled={!isValid}>
             {buttonText}
           </button>
         </fieldset>

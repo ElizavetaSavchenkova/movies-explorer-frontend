@@ -1,26 +1,13 @@
 import React from 'react';
-import { useState } from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import { useFormWithValidation } from "../FormValidation/FormValidation";
 
+function Login({ onLogin, errorText }) {
 
-function Login({ onLogin }) {
-  //const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-
-  //function handleEmailChange(event) {
-  //setEmail(event.target.value);
-  // }
-
-  // function handlePasswordChange(event) {
-  // setPassword(event.target.value);
-  //}
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   function handleLogin() {
     onLogin(values);
-    //setEmail('');
-    //setPassword('');
   }
 
   return (
@@ -63,6 +50,7 @@ function Login({ onLogin }) {
         text="Ещё не зарегистрированы?"
         path="/signup"
         link="Регистрация"
+        errorText={errorText}
       />
     </>
   )

@@ -1,51 +1,14 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { url } from '../../utils/auth';
+import React from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import { useFormWithValidation } from "../FormValidation/FormValidation";
 
 function Register({ onRegister, errorText }) {
-  //const [email, setEmail] = useState('');
-  //const [password, setPassword] = useState('');
-  // const [name, setName] = useState('');
 
-  //const {name, email, password} = values;
-  //props.onRegister({name, email, password});
-
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
-
-  //function handleNameChange(event) {
-  //setName(event.target.value);
-  //}
-
-  //function handleEmailChange(event) {
-  //setEmail(event.target.value);
-  //}
-
-  //function handlePasswordChange(event) {
-  //setPassword(event.target.value);
-  // }
-
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   function handleRegister() {
-    console.log('Привет')
-    console.log(values)
-    //const {name, email, password} = values
-    //console.log(values.email, name, password)
     onRegister(values);
-
-    ////старая версия
-    //onRegister({ name, email, password });
-    //setName('');
-    //setEmail('');
-    //setPassword('');
-    //console.log(name)
-
   }
-
-
-
-
 
   return (
     <>

@@ -1,15 +1,11 @@
 import React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import './Profile.css';
 import { useFormWithValidation } from "../FormValidation/FormValidation";
-
+import './Profile.css';
 
 function Profile({ onEditProfile, onSignOut, loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
-  // const [name, setName] = useState('');
-  //const [email, setEmail] = useState('');
-
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   function handleSubmit(event) {
@@ -21,27 +17,6 @@ function Profile({ onEditProfile, onSignOut, loggedIn }) {
   useEffect(() => {
     resetForm({ name: currentUser.name, email: currentUser.email }, {}, false);
   }, [resetForm, currentUser]);
-
-
-
-
-
-  //useEffect(() => {
-  // if (loggedIn){
-  // setName(currentUser.name);
-  // setEmail(currentUser.email);
-  // console.log(currentUser.email);
-
-  // }
-  //}, [loggedIn, currentUser])
-
-  //function handleChangeNameProfile(event) {
-  //setName(event.target.value)
-  //}
-
-  //function handleСhangeEmailProfile(event) {
-  //setEmail(event.target.value)
-  //}
 
   return (
     <section className="profile">

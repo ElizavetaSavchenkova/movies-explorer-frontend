@@ -4,10 +4,6 @@ import { useLocation } from 'react-router-dom';
 import '../Navigation/Navigation.css';
 import profileIcon from '../../images/profile-icon.svg';
 
-////
-
-
-
 function Navigation() {
   const location = useLocation();
   const path = location.pathname === '/';

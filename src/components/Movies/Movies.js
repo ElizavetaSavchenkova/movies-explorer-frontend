@@ -6,7 +6,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import './Movies.css';
 
-function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies, userMovies }) {
+function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies, userMovies, errorMovieMessage }) {
   const [keyword, setKeyword] = useLocalStorage('keyword', '');
   const [errorMessage, setErrorMessage] = useState('');
   const [query, setQuery] = useState(false);
@@ -25,7 +25,11 @@ function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies, 
   }
 
   function handleCheckbox() {
-    setCheckbox(!checkbox);
+    if (checkbox) {
+      setCheckbox(false)
+    } else {
+      setCheckbox(true)
+    }
     setQuery(true);
     localStorage.setItem('checkboxState', JSON.stringify(!checkbox));
   }
@@ -108,9 +112,10 @@ function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies, 
         handleSubmit={handleSubmitFormFilms}
         handleChange={handleChangeInputKeyword}
         keyword={keyword}
-        errorFormMessage={errorMessage}
         checkbox={checkbox}
         handleCheckbox={handleCheckbox}
+        errorFormMessage={errorMessage}
+        errorMovieMessage={errorMovieMessage}
       />
       {(query && (!checkbox || checkbox)) ? (
         <Preloader />

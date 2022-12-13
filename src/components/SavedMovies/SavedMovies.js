@@ -4,7 +4,6 @@ import { useLocalStorage } from '../LocalStorageTemplate/LocalStorageTemplate';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader'
-//import api from '../../utils/MainApi';
 import '../Movies/Movies.css'
 
 function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, currentUser }) {
@@ -16,16 +15,13 @@ function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, curre
   const [findMovies, setFindMovies] = useState([]);
   const [checkbox, setCheckbox] = useState(false);
 
-  console.log(checkbox)
-  console.log(userMovies);
-  console.log(findMovies);
-  console.log(localStorage)
-
   function handleCheckbox() {
-    setCheckbox(!checkbox)
-    setQuery(true)
-    console.log(checkbox)
-    console.log('Слайдер переключился')
+    if (checkbox) {
+      setCheckbox(false)
+    } else {
+      setCheckbox(true)
+    }
+    setQuery(true);
   }
 
   function handleChangeInputKeyword(event) {
@@ -48,7 +44,6 @@ function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, curre
   useEffect(() => {
     setErrorMessage('');
     if (keyword === '') {
-      console.log('ПРИВЕТ');
       setEmpty(true)
     }
   }, [keyword]);
@@ -57,31 +52,19 @@ function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, curre
     setFindMovies(userMovies.filter((movie) => movie.owner === currentUser._id))
   }, [userMovies, currentUser]);
 
-
-
   useEffect(() => {
     const savedUserMovies = userMovies.filter((movie) => movie.owner === currentUser._id);
-    const newSearchResult = savedUserMovies.filter(movie => movie.duration <= 40);
-    console.log(savedUserMovies)
-    console.log('savedUserMovies')
     if (query) {
       const searchResults = savedUserMovies.filter((movie) => {
         const titleMovie = movie.nameRU.toLowerCase();
         setEmpty(false);
         return titleMovie.includes(keyword.toLowerCase());
       });
-
       if (searchResults.length < 1) {
         setSuccessfulSearch(false);
-        console.log('Проверка')
       } else {
         setFindMovies(searchResults);
         localStorage.setItem('savedUserMovies', JSON.stringify(savedUserMovies));
-        console.log('SAVEDMOVIES')
-        console.log('newSearchResult')
-        console.log(newSearchResult)
-        console.log(searchResults)
-        console.log(localStorage);
         setSuccessfulSearch(true);
       }
       setTimeout(() => setQuery(false), 3000);
@@ -103,10 +86,7 @@ function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, curre
         const newSearchResult = searchResults.filter(movie => movie.duration <= 40);
         setFindMovies(newSearchResult)
         localStorage.setItem('foundSavedShortUserMovies', JSON.stringify(newSearchResult));
-
         setSuccessfulSearch(true);
-        console.log('Покажи по 40')
-        console.log(checkbox)
       }
     }
     setTimeout(() => setQuery(false), 3000);
@@ -142,58 +122,3 @@ function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, curre
 }
 
 export default SavedMovies;
-
-  //function checkbox(){
-    //if(checkbox){
-     // const newSearchResult = searchResults.filter(movie => movie.duration <= 40);
-    //}
-  //}
-
-//const savedUserMovies = userMovies.filter((movie) => movie.owner === currentUser._id);
-    //setFindMovies(savedUserMovies);
-    //console.log(currentUser.data)
-    //const savedUserMovies = userMovies.filter((movie) => movie.owner === currentUser._id);
-
-//useEffect(() => {
-  //console.log(keyword)
-  //if (query) {
-    //const searchResults = savedUserMovies.filter((movie) => {
-    //  const titleMovie = movie.nameRU.toLowerCase();
-      //setEmpty(false);
-     // return titleMovie.includes(keyword.toLowerCase());
-    //});
-
-    //if (searchResults.length < 1) {
-     // setSuccessfulSearch(false);
-      //console.log('Проверка')
-    //} else {
-    // setFindMovies(searchResults);
-      //console.log(searchResults)
-      //console.log(localStorage);
-      //setSuccessfulSearch(true);
-   // }
-  //}
-  //setTimeout(() => setQuery(false), 3000);
-//}, [query, userMovies, keyword, setFindMovies]);
-
-//localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
-  //const savedUserMovies = userMovies.filter((movie) => movie.owner === currentUser._id);
-
-  //useEffect(() => {
-  //createSavedMassive();
-  //setFindMovies(JSON.parse(localStorage.getItem('savedUserMovies')));
-  //console.log(savedUserMovies)
-  //}, [createSavedMassive, savedUserMovies]);
-
-  //function createSavedMassive(savedUserMovies) {
-  // localStorage.setItem('savedUserMovies', JSON.stringify(savedUserMovies));
-  // }
-
-  //useEffect(() => {
-    //if(!checkbox){
-    // const filter = (JSON.parse(localStorage.getItem('savedUserMovies')));
-      //const mimi = filter.filter((movie) => movie.owner === currentUser._id);
-      //const amo = mimi.filter(movie => movie.duration <= 40);
-     //setFindMovies(amo)
-    //}
-    //}, [checkbox, currentUser])

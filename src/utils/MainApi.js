@@ -11,7 +11,6 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  ///Получить информацию о пользователе
   getUserInformation() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
@@ -42,7 +41,6 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  //Изменение данных профиля
   editProfile({ name, email }) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
@@ -57,7 +55,6 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  //Удалить сохраненный фильм
   deleteCard(movieId) {
     return fetch(`${this._url}/movies/${movieId}`, {
       method: "DELETE",
@@ -87,8 +84,6 @@ class Api {
         nameEN: movie.nameEN,
         thumbnail: movie.thumbnail,
         movieId: movie.movieId,
-
-        //movieId: movie.id,
       }),
     }).then((res) => this._checkResponse(res));
   }
@@ -102,15 +97,14 @@ class Api {
       },
     }).then((res) => this._checkResponse(res));
   }
-
-
 }
 
 const api = new Api({
-  url: 'http://localhost:3001',
+  url: 'https://api.moviesexplorer.dipl.nomoredomains.sbs',
   headers: {
     "content-type": "application/json"
   }
 });
 
 export default api;
+//'https://api.moviesexplorer.dipl.nomoredomains.sbs',

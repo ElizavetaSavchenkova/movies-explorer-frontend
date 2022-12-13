@@ -1,5 +1,6 @@
-export const url = 'http://localhost:3001';
-//'https://api.moviesexplorer.dipl.nomoredomains.sbs'
+export const url = 'https://api.moviesexplorer.dipl.nomoredomains.sbs';
+
+//'http://localhost:3001';
 
 function checkResponse(res) {
   if (res.ok) {
