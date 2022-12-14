@@ -172,8 +172,6 @@ function App() {
         localStorage.setItem('jwt', res.token);
         setLoggedIn(true);
         history.push('/movies');
-        handleInfoTooltipOpen();
-        setInfoMessage(true)
       }).catch((err) => {
         console.log(err);
         handleInfoTooltipOpen();
