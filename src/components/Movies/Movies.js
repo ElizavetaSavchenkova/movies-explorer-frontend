@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { useLocalStorage } from '../LocalStorageTemplate/LocalStorageTemplate';
+import { useLocalStorage } from '../../hooks/useLocalStorageTemplate/useLocalStorageTemplate';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';

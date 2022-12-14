@@ -3,8 +3,6 @@ import { useState } from "react";
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
-
-
 function MoviesCardList({ movies, savedMovies, handleSaveMovie, handleDeleteMovies }) {
 
   const [width, setWidth] = useState(window.innerWidth);

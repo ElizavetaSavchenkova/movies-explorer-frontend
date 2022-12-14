@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import './MoviesCard.css';
 import movieImg from '../../images/film1.svg';
 
-function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies, savedMovies }) {
+function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies, savedMovies}) {
   const location = useLocation();
   const urlsave = location.pathname === "/saved-movies";
   const url = location.pathname === "/movies";

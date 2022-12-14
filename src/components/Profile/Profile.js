@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { useFormWithValidation } from "../FormValidation/FormValidation";
+import { useFormWithValidation } from "../../hooks/useFormValidation/useFormValidation";
 import './Profile.css';
 
 function Profile({ onEditProfile, onSignOut, loggedIn }) {

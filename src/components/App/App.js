@@ -4,7 +4,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useLocalStorage } from '../LocalStorageTemplate/LocalStorageTemplate';
+import { useLocalStorage } from '../../hooks/useLocalStorageTemplate/useLocalStorageTemplate';
 import Main from '../Main/Main';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -20,19 +20,39 @@ import * as auth from '../../utils/auth';
 import moviesApi from '../../utils/MoviesApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
-import useCloseButtons from '../useCloseButtons/useCloseButtons';
+import InfoTooltipMovie from '../InfoTooltipMovie/InfoTooltipMovie';
+import InfoTooltipMovieDel from '../InfoTooltipMovieDel/InfoTooltioMovieDel';
+import InfoTooltipProfile from '../InfoTooltipProfile/InfoTooltipProfile';
+import useCloseButtons from '../../hooks/useCloseButtons/useCloseButtons';
 import './App.css';
+
+import {
+  TAKEN_EMAIL_ERROR,
+  REQUEST_ERROR,
+  DATA_NEWUSER_ERROR,
+  SERVER_MESSAGE_ERROR,
+  AUTH_LOGIN_ERROR,
+  AUTH_ERROR,
+  SUCCSESS_LOG_INFO,
+  INFO_ERROR,
+  SUCCSESS_SAVE_MOVIE,
+  SUCCSESS_DELETE_MOVIE,
+  SUCCSESS_UPDATE_PROFILE
+}
+  from '../../utils/const';
 
 function App() {
   const location = useLocation();
   const history = useHistory();
-  //const [movies, setMovies] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [userMovies, setUserMovies] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [allMovies, setAllMovies] = useLocalStorage('allMovies', []);
   const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [isMovieInfoTooltipOpen, setIsMovieInfoTooltipOpen] = useState(false);
+  const [isMovieDelTooltipOpen, setIsMovieDelTooltipOpen] = useState(false);
+  const [isProfileTooltipOpen, setIsProfileToolTipOpen] = useState(false);
   const [infoMessage, setInfoMessage] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [errorMovieMessage, setErrorMovieMessage] = useState('')
@@ -40,8 +60,6 @@ function App() {
   const footer = ['/', '/movies', '/saved-movies'];
   const popup = ['/', '/movies', '/saved-movies', '/profile'];
   useCloseButtons(closeAllPopups, isInfoTooltipOpen);
-
-  const REQUEST_ERROR = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
 
   function handleMenuClick() {
     setIsPopupMenuOpen(true);
@@ -55,8 +73,31 @@ function App() {
     setIsInfoTooltipOpen(true);
   }
 
+  function handleMovieInfoTooltipOpen() {
+    setIsMovieInfoTooltipOpen(true)
+  }
+
+  function handleMovieDelInfoTooltipOpen() {
+    setIsMovieDelTooltipOpen(true);
+  }
+
+  function handleProfileTooltipOpen() {
+    setIsProfileToolTipOpen(true)
+  }
+
+  function closeTimeOut() {
+    setTimeout(() => {
+      setIsMovieInfoTooltipOpen(false);
+      setIsMovieDelTooltipOpen(false);
+      setIsProfileToolTipOpen(false);
+    }, 2000)
+  }
+
   function closeAllPopups() {
     setIsInfoTooltipOpen(false);
+    setIsMovieInfoTooltipOpen(false);
+    setIsMovieDelTooltipOpen(false);
+    setIsProfileToolTipOpen(false);
   }
 
   function showAuthError(message) {
@@ -91,13 +132,11 @@ function App() {
     }
   }, [loggedIn]);
 
-  //Подгрузить все фильмы/ Подгрузить информацию о пользователе
   useEffect(() => {
     if (loggedIn) {
       moviesApi.getMovies([])
         .then((movies) => {
           setAllMovies(movies)
-
         })
         .catch((err) => {
           console.log(err);
@@ -107,7 +146,6 @@ function App() {
   }, [loggedIn, setAllMovies]);
 
 
-  ///Регистрация пользователя
   function handleRegister({ name, email, password }) {
     auth.registerUser({ name, email, password })
       .then(() => {
@@ -119,37 +157,37 @@ function App() {
         handleInfoTooltipOpen();
         setInfoMessage(false)
         if (err.includes(409)) {
-          showAuthError('К сожалению, регистрация не удалась. Пользователь с указанным E-mail уже зарегистрирован.')
+          showAuthError(TAKEN_EMAIL_ERROR)
         } else if (err.includes(400)) {
-          showAuthError('К сожалению, произошла ошибка при регистрации. Пожалуйста, повторите попытку снова.')
+          showAuthError(DATA_NEWUSER_ERROR)
         } else {
-          showAuthError('К сожалению, произошла ошибка на сервере. Пожалуйста, повторите попытку регистрации позднее.')
+          showAuthError(SERVER_MESSAGE_ERROR)
         }
       });
   }
 
-  //Залогиниться
   function handleLogin({ email, password }) {
     auth.authorizeUser({ email, password })
       .then((res) => {
         localStorage.setItem('jwt', res.token);
         setLoggedIn(true);
         history.push('/movies');
+        handleInfoTooltipOpen();
+        setInfoMessage(true)
       }).catch((err) => {
         console.log(err);
         handleInfoTooltipOpen();
         setInfoMessage(false);
         if (err.includes(401)) {
-          showAuthError('При попытке входа указан неверный логин/пароль. Пожалуйста, укажите корректные данные.')
+          showAuthError(AUTH_LOGIN_ERROR)
         } else if (err.includes(400)) {
-          showAuthError('К сожалению, произошла ошибка при попытке входа. Пожалуйста, повторите попытку снова.')
+          showAuthError(AUTH_ERROR)
         } else {
-          showAuthError('К сожалению, произошла ошибка на сервере. Пожалуйста, повторите попытку регистрации позднее.')
+          showAuthError(SERVER_MESSAGE_ERROR)
         }
       })
   }
 
-  ///Обновить профиль (имя, мэйл)
   function handleUpdateUser({ name, email }) {
     api.editProfile({ name, email })
       .then(() => {
@@ -157,23 +195,24 @@ function App() {
         editedUserInfo.name = name;
         editedUserInfo.email = email;
         setCurrentUser({ ...editedUserInfo });
-        handleInfoTooltipOpen();
-        setInfoMessage(true)
+        handleProfileTooltipOpen();
+        setInfoMessage(true);
+        closeTimeOut();
       }).catch((err) => {
         console.log(err);
-        handleInfoTooltipOpen();
-        setInfoMessage(false)
+        handleProfileTooltipOpen();
+        setInfoMessage(false);
+        closeTimeOut();
       });
   }
 
-  //Выход из профиля
   function exitProfile() {
     setLoggedIn(false);
     localStorage.removeItem('jwt');
     localStorage.removeItem('keyword')
     localStorage.removeItem('foundUserMovies');
     localStorage.removeItem('foundShortUserMovies');
-    localStorage.removeItem('checkboxState')
+    localStorage.removeItem('checkboxState');
     history.push('/signin');
   }
 
@@ -189,14 +228,19 @@ function App() {
     };
   }, [loggedIn, setUserMovies, setLoggedIn]);
 
-
   function handleSaveMovie(movie) {
     api.saveMovie(movie)
       .then((addedMovie) => {
         setUserMovies([addedMovie, ...userMovies]);
+        handleMovieInfoTooltipOpen();
+        setInfoMessage(true);
+        closeTimeOut();
       })
       .catch((err) => {
         console.log(err);
+        handleMovieInfoTooltipOpen();
+        setInfoMessage(true);
+        closeTimeOut();
       })
   };
 
@@ -205,9 +249,15 @@ function App() {
       .then(() => {
         const moviesForDelete = userMovies.filter((i) => i._id !== movieId && i);
         setUserMovies(moviesForDelete);
+        handleMovieDelInfoTooltipOpen();
+        setInfoMessage(true);
+        closeTimeOut();
       })
       .catch((err) => {
         console.log(err);
+        handleMovieDelInfoTooltipOpen();
+        setInfoMessage(false);
+        closeTimeOut();
       });
   }
 
@@ -267,8 +317,26 @@ function App() {
           name={"info"}
           isOpen={isInfoTooltipOpen}
           onClose={closeAllPopups}
-          infoMessage={infoMessage}>
+          infoMessage={infoMessage ? SUCCSESS_LOG_INFO : INFO_ERROR}>
         </InfoTooltip>
+        <InfoTooltipMovie
+          name={"movie"}
+          isOpen={isMovieInfoTooltipOpen}
+          onClose={closeAllPopups}
+          infoMessage={infoMessage ? SUCCSESS_SAVE_MOVIE : INFO_ERROR}
+        />
+        <InfoTooltipMovieDel
+          name={"movie-delete"}
+          isOpen={isMovieDelTooltipOpen}
+          onClose={closeAllPopups}
+          infoMessage={infoMessage ? SUCCSESS_DELETE_MOVIE : INFO_ERROR}
+        />
+        <InfoTooltipProfile
+          name={"profile"}
+          isOpen={isProfileTooltipOpen}
+          onClose={closeAllPopups}
+          infoMessage={infoMessage ? SUCCSESS_UPDATE_PROFILE : INFO_ERROR}
+        />
         {footer.includes(location.pathname) ? <Footer /> : null}
       </div >
     </CurrentUserContext.Provider>
@@ -276,3 +344,4 @@ function App() {
 }
 
 export default App
+
