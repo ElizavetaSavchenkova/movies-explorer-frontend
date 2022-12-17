@@ -12,6 +12,10 @@
   background-color: #ffffff;
 }
 
+.header_theme_new {
+  background-color: #5C5C5C;
+}
+
 .header__container {
   margin: 0;
   padding: 18px 0 14px;

@@ -16,6 +16,8 @@
     visibility: hidden;
     background-color: rgba(0, 0, 0, .3);
     visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.7s, opacity 0.6s linear;
     z-index: 1;
   }
 
@@ -23,6 +25,7 @@
     display: flex;
     opacity: 1;
     visibility: visible;
+
   }
 
   .popup-menu__container {

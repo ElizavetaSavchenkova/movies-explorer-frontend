@@ -57,6 +57,7 @@
   flex-direction: column;
   align-items: center;
   border: none;
+  position: relative;
 }
 
 .auth__form-label {
@@ -67,6 +68,10 @@
   flex-direction: column;
 }
 
+.auth__form-label:last-of-type {
+  border-bottom: none;
+  padding-top: 6px;
+}
 
 .auth__form-input-name {
   margin: 0;
@@ -95,14 +100,6 @@
   border-bottom: 1px solid #E8E8E8;
 }
 
-.auth__form-input_password {
-  color: #EE3465
-}
-
-.auth__form-input_email {
-  border-bottom: 1px solid #2BE080;
-}
-
 .auth__form-input::placeholder {
   color: #A0A0A0;
 }
@@ -122,6 +119,15 @@
   box-sizing: border-box;
 }
 
+.auth__form-input_error {
+  color: #EE3465;
+  border-bottom: 1px solid #EE3465;
+}
+
+.auth__form-input_valid {
+  border-bottom: 1px solid #2BE080;
+}
+
 .auth__button {
   margin: 197px 0 0 0;
   padding: 13px 0 15px 0;
@@ -136,6 +142,35 @@
   border: none;
   cursor: pointer;
   transition: opacity 1s ease-in;
+}
+
+.auth__button_disabled {
+  margin: 197px 0 0 0;
+  padding: 13px 0 15px 0;
+  width: 100%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+  background-color: #E8E8E8;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 1s ease-in;
+}
+
+.auth__button-error {
+  display: block;
+  width: 100%;
+  height: 20px;
+  background-color: #ffffff;
+  color: #EE3465;
+  position: absolute;
+  top: 300px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .auth__button:hover {
@@ -173,7 +208,6 @@
 .auth__form-text-link:hover {
   opacity: 0.6;
 }
-
 
 @media screen and (min-width:550px) and (max-width:1023px) {
   .auth {

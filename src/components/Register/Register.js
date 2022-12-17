@@ -1,30 +1,67 @@
 import React from 'react';
 import AuthForm from '../AuthForm/AuthForm';
+import { useFormWithValidation } from "../../hooks/useFormValidation/useFormValidation";
+import { TEMPLATE_EMAIL } from '../../utils/const';
 
-function Register() {
+function Register({ onRegister, errorText }) {
+
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
+
+  function handleRegister() {
+    onRegister(values);
+  }
+
   return (
     <>
       <AuthForm
+        isValid={isValid}
+        onSubmit={handleRegister}
         head="Добро пожаловать!"
         children={
           <>
             <label className="auth__form-label">
               <span className="auth__form-input-name">Имя</span>
-              <input className="auth__form-input" id="nameReg" name="nameRegInput" type="text"
-                placeholder="Имя" required />
-              <span className="auth__form-input-error"></span>
+              <input className={`auth__form-input ${errors.name ? "auth__form-input_error" : ""} ${values.name ? "auth__form-input_valid" : ""}`}
+                id="nameReg"
+                name="name"
+                type="text"
+                placeholder="Имя"
+                minLength="2"
+                maxLength="30"
+                required
+                value={values.name || ''}
+                onChange={handleChange}
+              />
+              <span className="auth__form-input-error">{errors.name}</span>
             </label>
             <label className="auth__form-label">
               <span className="auth__form-input-name">E-mail</span>
-              <input className="auth__form-input auth__form-input_email" id="emailReg" type="email" name="emailRegInput"
-                placeholder="Email" required />
-              <span className="auth__form-input-error"></span>
+              <input className={`auth__form-input ${errors.email ? "auth__form-input_error" : ""} ${values.email ? "auth__form-input_valid" : ""}`}
+                id="emailReg"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                value={values.email || ''}
+                onChange={handleChange}
+                pattern={TEMPLATE_EMAIL}/>
+              <span className="auth__form-input-error">{errors.email}</span>
             </label>
             <label className="auth__form-label">
               <span className="auth__form-input-name">Пароль</span>
-              <input className="auth__form-input auth__form-input_password" id="passwordReg" type="password" name="passwordRegInput"
-                placeholder="Пароль" autoComplete="off" required />
-              <span className="auth__form-input-error">Что-то пошло не так...</span>
+              <input className={`auth__form-input ${errors.password ? "auth__form-input_error" : ""} ${values.password ? "auth__form-input_valid" : ""}`}
+                id="passwordReg"
+                type="password"
+                name="password"
+                placeholder="Пароль"
+                autoComplete="off"
+                minLength="8"
+                maxLength="30"
+                required
+                value={values.password || ''}
+                onChange={handleChange}
+              />
+              <span className="auth__form-input-error">{errors.password}</span>
             </label>
           </>
         }
@@ -32,6 +69,7 @@ function Register() {
         text="Уже зарегистрированы?"
         path="/signin"
         link="Войти"
+        errorText={errorText}
       />
     </>
   );
@@ -39,4 +77,3 @@ function Register() {
 
 export default Register
 
-//что-то пошло не так вставлено для примера, т.к. пока не прописана валидация"//
