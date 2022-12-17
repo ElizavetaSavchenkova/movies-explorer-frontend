@@ -39,7 +39,3 @@ function AuthForm({ onSubmit, head, children, text, path, link, isValid, errorTe
 
 export default AuthForm
 
-
-
-//зеленая полосочка при выборе, убрать красный текст ошибки
-

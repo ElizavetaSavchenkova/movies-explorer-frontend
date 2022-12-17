@@ -1,10 +1,11 @@
 import React from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import { useFormWithValidation } from "../../hooks/useFormValidation/useFormValidation";
+import { TEMPLATE_EMAIL } from '../../utils/const';
 
 function Login({ onLogin, errorText }) {
 
-  const { values, handleChange, errors, isValid } = useFormWithValidation();
+  const { values, handleChange, errors, isValid} = useFormWithValidation();
 
   function handleLogin() {
     onLogin(values);
@@ -27,7 +28,9 @@ function Login({ onLogin, errorText }) {
                 placeholder="Email"
                 required
                 value={values.email || ''}
-                onChange={handleChange} />
+                onChange={handleChange}
+                pattern={TEMPLATE_EMAIL}
+                />
               <span className="auth__form-input-error">{errors.email}</span>
             </label>
             <label className="auth__form-label">

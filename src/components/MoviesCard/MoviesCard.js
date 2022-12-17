@@ -4,26 +4,27 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import './MoviesCard.css';
 import movieImg from '../../images/film1.svg';
+import { ONE_HOUR_DURATION_MOVIE, NO_INFO_AVAILABLE } from "../../utils/const";
 
-function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies, savedMovies}) {
+function MoviesCard({ movie, handleSaveMovie, handleDeleteMovies, savedMovies }) {
   const location = useLocation();
   const urlsave = location.pathname === "/saved-movies";
   const url = location.pathname === "/movies";
   const { nameRU, image, trailerLink, trailer } = movie;
   const [buttonState, setButtonState] = useState(false);
   const addedMovie = savedMovies.find((i) => i.movieId === movie.id);
-  const mathDuration = movie.duration >= 60 ? `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м` : `${movie.duration % 60}м`;
+  const mathDuration = movie.duration >= ONE_HOUR_DURATION_MOVIE ? `${Math.floor(movie.duration / ONE_HOUR_DURATION_MOVIE)}ч ${movie.duration % ONE_HOUR_DURATION_MOVIE}м` : `${movie.duration % ONE_HOUR_DURATION_MOVIE}м`;
 
   const movieInformation = {
-    country: movie.country || "Информация отсутствует",
-    director: movie.director || "Информация отсутствует",
+    country: movie.country || NO_INFO_AVAILABLE,
+    director: movie.director || NO_INFO_AVAILABLE,
     duration: movie.duration,
-    year: movie.year || "Информация отсутствует",
-    description: movie.description || "Информация отсутствует",
+    year: movie.year || NO_INFO_AVAILABLE,
+    description: movie.description || NO_INFO_AVAILABLE,
     trailerLink: movie.trailerLink,
     image: `${movie.image === null ? `${movieImg}` : `https://api.nomoreparties.co${movie.image?.url}`}`,
-    nameRU: movie.nameRU || "Информация отсутствует",
-    nameEN: movie.nameEN || "Информация отсутствует",
+    nameRU: movie.nameRU || NO_INFO_AVAILABLE,
+    nameEN: movie.nameEN || NO_INFO_AVAILABLE,
     thumbnail: `https://api.nomoreparties.co${movie.image?.formats?.thumbnail?.url}`,
     movieId: movie.id,
   };

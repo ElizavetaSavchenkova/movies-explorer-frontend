@@ -2,29 +2,40 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
+import {
+  MOVIES_TWELVE,
+  MOVIES_EIGHT,
+  MOVIES_FIVE,
+  LARGE_SCREEN_WIDTH,
+  MIDDLE_SCREEN_WIDTH,
+  SMALL_SCREEN_WIDTH,
+  MOVIES_THREE,
+  MOVIES_TWO,
+  MOVIES_NULL
+} from "../../utils/const";
 
 function MoviesCardList({ movies, savedMovies, handleSaveMovie, handleDeleteMovies }) {
 
   const [width, setWidth] = useState(window.innerWidth);
-  const [amount, setAmount] = useState(12);
+  const [amount, setAmount] = useState(MOVIES_TWELVE);
 
   useEffect(() => {
-    if (width >= 1280) {
-      setAmount(12);
+    if (width >= LARGE_SCREEN_WIDTH) {
+      setAmount(MOVIES_TWELVE);
     }
-    if (width <= 1100) {
-      setAmount(8);
+    if (width <= MIDDLE_SCREEN_WIDTH) {
+      setAmount(MOVIES_EIGHT);
     }
-    if (width <= 650) {
-      setAmount(5);
+    if (width <= SMALL_SCREEN_WIDTH) {
+      setAmount(MOVIES_FIVE);
     }
   }, [width])
 
   function handleMoreMovies() {
-    if (width >= 1280) {
-      setAmount(amount + 3);
+    if (width >= LARGE_SCREEN_WIDTH) {
+      setAmount(amount + MOVIES_THREE);
     } else {
-      setAmount(amount + 2);
+      setAmount(amount + MOVIES_TWO);
     }
   }
 
@@ -48,9 +59,9 @@ function MoviesCardList({ movies, savedMovies, handleSaveMovie, handleDeleteMovi
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  let cardList = movies.slice(0, amount);
+  let cardList = movies.slice(MOVIES_NULL, amount);
 
-  const buttonMoreMovies = movies.length > 0 && movies.length > amount;
+  const buttonMoreMovies = movies.length > MOVIES_NULL && movies.length > amount;
 
   return (
     <section className="movies">

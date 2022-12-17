@@ -1,13 +1,13 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { useLocalStorage } from '../../hooks/useLocalStorageTemplate/useLocalStorageTemplate';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Preloader from '../Preloader/Preloader'
+import Preloader from '../Preloader/Preloader';
+import { SHORTMOVIES_DURATION, LENGTH_ARRAY } from '../../utils/const';
 import '../Movies/Movies.css'
 
 function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, currentUser }) {
-  const [keyword, setKeyword] = useLocalStorage('keyword', '');
+  const [keyword, setKeyword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [query, setQuery] = useState(false);
   const [empty, setEmpty] = useState(false);
@@ -60,7 +60,7 @@ function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, curre
         setEmpty(false);
         return titleMovie.includes(keyword.toLowerCase());
       });
-      if (searchResults.length < 1) {
+      if (searchResults.length < LENGTH_ARRAY) {
         setSuccessfulSearch(false);
       } else {
         setFindMovies(searchResults);
@@ -80,10 +80,10 @@ function SavedMovies({ handleAddFav, userMovies, handleDeleteMovies, user, curre
         return titleMovie.includes(keyword.toLowerCase());
       });
 
-      if (searchResults.length < 1) {
+      if (searchResults.length < LENGTH_ARRAY) {
         setSuccessfulSearch(false);
       } else {
-        const newSearchResult = searchResults.filter(movie => movie.duration <= 40);
+        const newSearchResult = searchResults.filter(movie => movie.duration <= SHORTMOVIES_DURATION);
         setFindMovies(newSearchResult)
         localStorage.setItem('foundSavedShortUserMovies', JSON.stringify(newSearchResult));
         setSuccessfulSearch(true);

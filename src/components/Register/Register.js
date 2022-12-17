@@ -1,6 +1,7 @@
 import React from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import { useFormWithValidation } from "../../hooks/useFormValidation/useFormValidation";
+import { TEMPLATE_EMAIL } from '../../utils/const';
 
 function Register({ onRegister, errorText }) {
 
@@ -42,7 +43,8 @@ function Register({ onRegister, errorText }) {
                 placeholder="Email"
                 required
                 value={values.email || ''}
-                onChange={handleChange} />
+                onChange={handleChange}
+                pattern={TEMPLATE_EMAIL}/>
               <span className="auth__form-input-error">{errors.email}</span>
             </label>
             <label className="auth__form-label">

@@ -4,6 +4,7 @@ import { useLocalStorage } from '../../hooks/useLocalStorageTemplate/useLocalSto
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
+import { SHORTMOVIES_DURATION, LENGTH_ARRAY } from '../../utils/const';
 import './Movies.css';
 
 function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies, userMovies, errorMovieMessage }) {
@@ -73,7 +74,7 @@ function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies, 
         setEmpty(false);
         return titleMovie.includes(keyword.toLowerCase());
       });
-      if (searchResults.length < 1) {
+      if (searchResults.length < LENGTH_ARRAY) {
         localStorage.setItem('foundUserMovies', JSON.stringify(searchResults));
         setSuccessfulSearch(false);
       } else {
@@ -93,8 +94,8 @@ function Movies({ allMovies, handleAddFav, handleSaveMovie, handleDeleteMovies, 
         setEmpty(false);
         return titleMovie.includes(keyword.toLowerCase());
       });
-      const shortSearchResult = searchResults.filter(movie => movie.duration <= 40);
-      if (shortSearchResult.length < 1) {
+      const shortSearchResult = searchResults.filter(movie => movie.duration <= SHORTMOVIES_DURATION);
+      if (shortSearchResult.length < LENGTH_ARRAY) {
         setSuccessfulSearch(false);
         localStorage.setItem('foundShortUserMovies', JSON.stringify(shortSearchResult));
       } else {

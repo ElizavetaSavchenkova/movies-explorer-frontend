@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -145,7 +145,6 @@ function App() {
     }
   }, [loggedIn, setAllMovies]);
 
-
   function handleRegister({ name, email, password }) {
     auth.registerUser({ name, email, password })
       .then(() => {
@@ -211,7 +210,7 @@ function App() {
     localStorage.removeItem('foundUserMovies');
     localStorage.removeItem('foundShortUserMovies');
     localStorage.removeItem('checkboxState');
-    history.push('/signin');
+    history.push('/');
   }
 
   useEffect(() => {
@@ -272,15 +271,20 @@ function App() {
           <Route exact path="/">
             <Main />
           </Route>
+
           <Route path="/signup">
-            <Register
-              onRegister={handleRegister}
-              errorText={errorText} />
+            {!loggedIn ? (
+              <Register
+                onRegister={handleRegister}
+                errorText={errorText} />
+            ) : (<Redirect to="/" />)}
           </Route>
           <Route path="/signin">
-            <Login
-              onLogin={handleLogin}
-              errorText={errorText} />
+            {!loggedIn ? (
+              <Login
+                onLogin={handleLogin}
+                errorText={errorText} />
+            ) : (<Redirect to="/" />)}
           </Route>
           <ProtectedRoute
             exact path='/profile'

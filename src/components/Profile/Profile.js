@@ -7,6 +7,7 @@ import './Profile.css';
 function Profile({ onEditProfile, onSignOut, loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const isValidProfileInfo = isValid && (currentUser.name !== values.name || currentUser.email !== values.email);
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -35,7 +36,6 @@ function Profile({ onEditProfile, onSignOut, loggedIn }) {
               value={values.name || ''}
               minLength="2"
               maxLength="30" />
-
           </label>
           <span className="profile__data-input-error">{errors.name}</span>
           <label className="profile__data">
@@ -49,11 +49,10 @@ function Profile({ onEditProfile, onSignOut, loggedIn }) {
               onChange={handleChange}
               value={values.email || ''}
             />
-
           </label>
           <span className="profile__data-input-error">{errors.email}</span>
           <div className="profile__buttons">
-            <button aria-label="Редактировать профиль" className="profile__button" type="submit" disabled={!isValid}>Редактировать</button>
+            <button aria-label="Редактировать профиль" className="profile__button" type="submit" disabled={!isValidProfileInfo}>Редактировать</button>
             <button aria-label="Выйти из аккаунта" className="profile__button profile__button_logout" type="submit" onClick={onSignOut}>Выйти из аккаунта</button>
           </div>
         </fieldset>
